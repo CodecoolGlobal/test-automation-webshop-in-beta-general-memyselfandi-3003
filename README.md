@@ -62,7 +62,7 @@ The thirteen-test version passed locally. On **17 November 2026**, the tester al
 
 The seventeen-test version passed locally in headless Chrome on **17 November 2026**. Its push workflow also succeeded in [GitHub Actions run #23](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44149916341) for commit `69373de`. The `test` job completed in **1 minute 5 seconds**, as verified directly in GitHub. This records workflow-level CI success; the local per-class results are listed separately above.
 
-The new twenty-two-test version passed locally in headless Chrome on **17 November 2026**. Its first GitHub Actions run is pending the checkout branch push. The suite includes eight negative cases: four login, one post-logout access, and three checkout required-field cases.
+The twenty-two-test version passed locally in headless Chrome on **17 November 2026**. Its push workflow also succeeded in [GitHub Actions run #27](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44152861509) for commit `d926e2b`. The user-provided Maven summary reports **22 tests, 0 failures, 0 errors, and 0 skipped tests**. The workflow screenshot shows Success, **1 minute 25 seconds** total duration, a **1 minute 21 seconds** `test` job, and one artifact. The suite includes eight negative cases: four login, one post-logout access, and three checkout required-field cases.
 
 ## Local setup
 
@@ -172,6 +172,6 @@ Page objects contain browser interactions; tests contain JUnit assertions. Expli
 
 ## Next steps
 
-1. Review the checkout implementation, then stage, commit, and push its branch. Verify CI and open its pull request.
+1. Commit and push the CI-result documentation, then complete the checkout pull request and verify its latest checks before merging.
 2. Implement the planned `error_user` sorting execution and create reproducible defect tickets for the observed failures.
 3. Execute the expanded suite and write the release status report.

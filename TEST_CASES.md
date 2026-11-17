@@ -190,7 +190,7 @@ Local verification details:
 
 **Earlier seventeen-test version:** The seventeen-test version passed locally in headless Chrome on **17 November 2026**. Its push workflow also succeeded in [GitHub Actions run #23](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44149916341) for commit `69373de`. The `test` job completed in **1 minute 5 seconds**, as verified directly in GitHub. This records workflow-level CI success; the local per-class results are listed separately above.
 
-**Current twenty-two-test version:** verified locally on 17 November 2026. Its first GitHub Actions run is pending the checkout branch push.
+**Current twenty-two-test version:** The twenty-two-test version passed locally in headless Chrome on **17 November 2026**. Its push workflow also succeeded in [GitHub Actions run #27](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44152861509) for commit `d926e2b`. The user-provided Maven summary reports **22 tests, 0 failures, 0 errors, and 0 skipped tests**. The workflow screenshot shows Success, **1 minute 25 seconds** total duration, a **1 minute 21 seconds** `test` job, and one artifact.
 
 The additional `error_user` execution of TC-SORT-03 is **Not Run** and not implemented. All 22 logical cases have baseline automated coverage; this does not establish release readiness for the other accounts or resolve exploratory defects. Record each later account-specific execution separately with its result, actual behavior, evidence, and related issue where applicable.
 
@@ -205,7 +205,7 @@ Allowed results: **Not Run**, **Pass**, **Fail**, and **Blocked**. Record a bloc
 5. **Completed:** implement four standard-user sorting cases, verify the complete eleven-test suite locally, and verify the successful push workflow (56-second `test` job). The sorting pull request was merged into `main` before starting the product-details branch.
 6. **Completed:** implement and review both product-detail navigation cases, verify all thirteen tests locally, and record the tester-reported successful GitHub Actions run. The product-details pull request was merged into `main` before starting the cart branch.
 7. **Completed:** implement and review the four cart cases, verify all seventeen tests locally, and verify the successful push workflow in GitHub Actions run #23 (1 minute 5 seconds). The cart pull request was merged into `main` before starting the checkout branch.
-8. **Completed locally:** implement the five checkout cases and verify the complete twenty-two-test suite. Code review, push, CI, and the checkout pull request remain pending.
+8. **Completed:** implement the five checkout cases, verify all twenty-two tests locally, and record successful GitHub Actions run #27 with 22 tests, 0 failures, 0 errors, and 0 skipped tests. Complete the checkout pull request and verify its latest checks before merging.
 9. **Planned:** implement and execute the `error_user` sorting variant.
 10. **Planned:** review failures, file reproducible issues, and write the release report with the actual tested account scope.
 
