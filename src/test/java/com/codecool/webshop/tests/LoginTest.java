@@ -24,7 +24,7 @@ public class LoginTest extends BaseTest {
     @Test
     @DisplayName("TC-LOGIN-01: Successful login with valid credentials")
     public void successfulLoginWithValidCredentials() {
-        loginPage.login(testUsername, testPassword);
+        loginPage.login(standardUsername, testPassword);
         productsPage.waitUntilLoaded();
 
         assertAll("Product list after login",
@@ -36,6 +36,89 @@ public class LoginTest extends BaseTest {
                         "The product list should contain products."),
                 () -> assertTrue(productsPage.isMenuButtonDisplayed(),
                         "The navigation menu should be visible.")
+        );
+    }
+
+    @Test
+    @DisplayName("TC-LOGIN-02: Incorrect password prevents login")
+    public void incorrectPasswordPreventLogin() {
+        String loginUrl = loginPage.getCurrentUrl();
+
+        loginPage.login(standardUsername, testPassword + "-incorrect");
+
+        assertAll("Rejected login",
+                () -> assertEquals(
+                        "Epic sadface: Username and password do not match any user in this service",
+                        loginPage.getLoginErrorText(),
+                        "An incorrect password should display a credential error."
+                ),
+                () -> assertEquals(
+                        loginUrl,
+                        loginPage.getCurrentUrl(),
+                        "The user should remain on the login page."
+                ));
+    }
+
+    @Test
+    @DisplayName("TC-LOGIN-03: Empty username prevents login")
+    public void emptyUsernamePreventsLogin() {
+        String loginUrl = loginPage.getCurrentUrl();
+
+        loginPage.login("", testPassword);
+
+        assertAll("Missing username",
+                () -> assertEquals(
+                        "Epic sadface: Username is required",
+                        loginPage.getLoginErrorText(),
+                        "An empty username should display a required-field error."
+                ),
+                () -> assertEquals(
+                        loginUrl,
+                        loginPage.getCurrentUrl(),
+                        "The user should remain on the login page."
+                )
+        );
+    }
+
+    @Test
+    @DisplayName("TC-LOGIN-04: Empty password prevents login")
+    public void emptyPasswordPreventsLogin() {
+        String loginUrl = loginPage.getCurrentUrl();
+
+        loginPage.login(standardUsername, "");
+
+        assertAll("Missing password",
+                () -> assertEquals(
+                        "Epic sadface: Password is required",
+                        loginPage.getLoginErrorText(),
+                        "An empty password should display a required-field error."
+                ),
+                () -> assertEquals(
+                        loginUrl,
+                        loginPage.getCurrentUrl(),
+                        "The user should remain on the login page."
+                )
+        );
+    }
+
+    @Test
+    @DisplayName("TC-LOGIN-05: Locked account cannot log in")
+    public void lockedAccountCannotLogIn() {
+        String loginUrl = loginPage.getCurrentUrl();
+
+        loginPage.login(lockedUsername, testPassword);
+
+        assertAll("Locked account",
+                () -> assertEquals(
+                        "Epic sadface: Sorry, this user has been locked out.",
+                        loginPage.getLoginErrorText(),
+                        "A locked account should display an account-restriction error."
+                ),
+                () -> assertEquals(
+                        loginUrl,
+                        loginPage.getCurrentUrl(),
+                        "The locked user should remain on the login page."
+                )
         );
     }
 }

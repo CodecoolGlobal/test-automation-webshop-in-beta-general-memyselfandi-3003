@@ -2,11 +2,13 @@ package com.codecool.webshop.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LoginPage extends BasePage {
     private final By usernameInput = By.id("user-name");
     private final By passwordInput = By.id("password");
     private final By loginButton = By.id("login-button");
+    private final By loginErrorMessage = By.cssSelector("[data-test='error']");
 
     public LoginPage(WebDriver driver, String baseUrl) {
         super(driver, baseUrl);
@@ -32,5 +34,9 @@ public class LoginPage extends BasePage {
         enterUsername(username);
         enterPassword(password);
         clickLoginButton();
+    }
+
+    public String getLoginErrorText() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(loginErrorMessage)).getText();
     }
 }
