@@ -1,6 +1,6 @@
 # SauceDemo — Test Cases
 
-This is the initial test specification for [SauceDemo](https://www.saucedemo.com/), based on manual exploration. It contains **22 logical test cases** across the six required user stories, with **1–5 cases per story**. **TC-LOGIN-01 through TC-LOGIN-05, TC-LOGOUT-01 through TC-LOGOUT-02, and the four standard-user sorting cases are implemented. A combined local headless Maven run on 17 November 2026 passed all eleven executions with no failures, errors, or skipped tests.** The remaining 11 logical cases and the additional `error_user` execution of TC-SORT-03 are planned and not implemented. The earlier five-login-test workflow succeeded in **GitHub Actions run #5** for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The earlier seven-test workflow succeeded in [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619) for commit `ede1771`. The push workflow for the eleven-test version succeeded for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks); its `test` job took 56 seconds, as shown in the user-provided workflow summary. Initial exploratory observations are kept separate from automated execution results.
+This is the initial test specification for [SauceDemo](https://www.saucedemo.com/), based on manual exploration. It contains **22 logical test cases** across the six required user stories, with **1–5 cases per story**. **TC-LOGIN-01 through TC-LOGIN-05, TC-LOGOUT-01 through TC-LOGOUT-02, the four standard-user sorting cases, and TC-PRODUCT-01 through TC-PRODUCT-02 are implemented. A combined local headless Maven run on 17 November 2026 passed all thirteen executions with no failures, errors, or skipped tests.** The remaining 9 logical cases and the additional `error_user` execution of TC-SORT-03 are planned and not implemented. The earlier five-login-test workflow succeeded in **GitHub Actions run #5** for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The earlier seven-test workflow succeeded in [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619) for commit `ede1771`. The push workflow for the eleven-test version succeeded for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks); its `test` job took 56 seconds, as shown in the user-provided workflow summary. Initial exploratory observations are kept separate from automated execution results.
 
 ## Scope and accounts
 
@@ -81,7 +81,7 @@ For each sorting case, capture the product identities before sorting and verify 
 | TC-PRODUCT-01 | Open via product image — Positive | Sign in. Record the primary product's name, price, description, and image from the list. Select its image. | A dedicated detail page opens for that product. Name, numeric price, description, and image correspond to the selected list item. |
 | TC-PRODUCT-02 | Open via product name — Positive | Start from a fresh session and sign in. Record the primary product's details. Select its name. | The corresponding detail page opens and displays consistent product information. |
 
-**Exploration note:** image-based navigation was observed. Name-based navigation and complete cross-page data consistency still need formal verification. Treat image equivalence semantically; different image sizes do not automatically indicate a defect.
+**Automation status:** both cases are implemented in `ProductDetailsTest` for `standard_user`, using Sauce Labs Backpack. Each independent session captures the list price, description, and image source before clicking. Assertions require a dedicated product-detail URL, the selected product name, matching numeric price and description, the same image asset URL, and a visible image element. Image dimensions and pixel appearance are not compared; the current application uses the same asset on both pages. The tests compare cross-page consistency, not the correctness of the catalog data against an external specification. Both cases passed in the combined thirteen-test local headless run. The list links use a placeholder `href`; tests check the actual navigation after clicking rather than requiring a destination URL in the link markup.
 
 ## US-05 — Manage the cart
 
@@ -142,7 +142,7 @@ Keep these findings in defect tracking or exploratory notes. Expand automation a
 
 ## Execution results and issue links
 
-**Local headless Maven run, 17 November 2026:** the complete suite passed with **11 tests, 0 failures, 0 errors, and 0 skipped tests**. This result was verified from the generated Surefire reports, rather than inferred from exploratory notes.
+**Local headless Maven run, 17 November 2026:** the complete suite passed with **13 tests, 0 failures, 0 errors, and 0 skipped tests**. This result was verified from the generated Surefire reports, rather than inferred from exploratory notes.
 
 | Case ID | Account / input | Local result | Evidence | Issue |
 | --- | --- | --- | --- | --- |
@@ -158,6 +158,8 @@ Keep these findings in defect tracking or exploratory notes. Expand automation a
 | TC-SORT-03 | `standard_user`, Price low–high | Pass | Local Maven / Surefire | — |
 | TC-SORT-03 | `error_user`, Price low–high | Not Run | Not implemented; exploratory observation only | Ticket pending |
 | TC-SORT-04 | `standard_user`, Price high–low | Pass | Local Maven / Surefire | — |
+| TC-PRODUCT-01 | `standard_user`, Backpack image | Pass | Local Maven / Surefire | — |
+| TC-PRODUCT-02 | `standard_user`, Backpack name | Pass | Local Maven / Surefire | — |
 
 Local verification details:
 
@@ -165,15 +167,17 @@ Local verification details:
 - Java runtime: 25.0.4.1; compiler release: 17.
 - Operating system: Windows.
 - Installed Chrome: 157.0.8103.78.
-- Reports: `target/surefire-reports/TEST-com.codecool.webshop.tests.LoginTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.LogoutTest.xml`, and `target/surefire-reports/TEST-com.codecool.webshop.tests.ProductSortingTest.xml`, with their corresponding `.txt` summaries.
+- Reports: `target/surefire-reports/TEST-com.codecool.webshop.tests.LoginTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.LogoutTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.ProductSortingTest.xml`, and `target/surefire-reports/TEST-com.codecool.webshop.tests.ProductDetailsTest.xml`, with their corresponding `.txt` summaries.
 
 **Earlier CI evidence:** GitHub Actions run **#5**, for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks), completed successfully with the five-login-test version. Its test and report-upload steps succeeded.
 
 **Earlier seven-test CI verification, 17 November 2026:** [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619), for commit `ede1771`, completed successfully in **29 seconds**. Its **Run tests** and **Upload test results** steps succeeded for the seven-test login/logout version. The workflow summary provides the run-level evidence; the `test-results` artifact contains the detailed Surefire reports.
 
-**Eleven-test push CI verification, 17 November 2026:** The push workflow for the eleven-test version also succeeded on **17 November 2026**, for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks). The user-provided GitHub Actions summary shows a successful `test` job with a duration of **56 seconds**. This is workflow-level evidence; the exact eleven-test counts above were verified locally from Surefire reports.
+**Eleven-test push CI verification, 17 November 2026:** The push workflow for the eleven-test version also succeeded on **17 November 2026**, for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks). The user-provided GitHub Actions summary shows a successful `test` job with a duration of **56 seconds**. This is workflow-level evidence; the summary records success for that earlier eleven-test version.
 
-The remaining 11 logical cases and the additional `error_user` execution of TC-SORT-03 are **Not Run** and not implemented. Record each later account-specific execution separately with its result, actual behavior, evidence, and related issue where applicable.
+**Current thirteen-test version:** The thirteen-test version passed locally. On **17 November 2026**, the tester also reported that all tests passed in GitHub Actions for the product-details version, commit [`7085166`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/7085166d30cf0f056faf8a58455e6c51ad1773ef/checks). Local counts were verified from Surefire reports; the CI result is based on the tester's confirmation.
+
+The remaining 9 logical cases and the additional `error_user` execution of TC-SORT-03 are **Not Run** and not implemented. Record each later account-specific execution separately with its result, actual behavior, evidence, and related issue where applicable.
 
 Allowed results: **Not Run**, **Pass**, **Fail**, and **Blocked**. Record a blocker and its issue when applicable. Never mark an unexecuted case as passed based on another account's result.
 
@@ -183,8 +187,9 @@ Allowed results: **Not Run**, **Pass**, **Fail**, and **Blocked**. Record a bloc
 2. **Completed:** implement five login cases and verify their workflow in GitHub Actions run #5.
 3. **Completed locally:** implement two logout cases and verify the complete seven-test suite in a headless Maven run.
 4. **Completed:** verify the seven-test workflow in GitHub Actions run #9; test execution and report upload succeeded. The logout pull request was merged into `main` before starting the sorting branch.
-5. **Completed:** implement four standard-user sorting cases, verify the complete eleven-test suite locally, and verify the successful push workflow (56-second `test` job). The sorting pull request and its PR checks remain pending.
-6. **Planned:** add the remaining core cases, then the `error_user` sorting variant.
-7. **Planned:** review failures, file reproducible issues, and write the release report with the actual tested account scope.
+5. **Completed:** implement four standard-user sorting cases, verify the complete eleven-test suite locally, and verify the successful push workflow (56-second `test` job). The sorting pull request was merged into `main` before starting the product-details branch.
+6. **Completed:** implement and review both product-detail navigation cases, verify all thirteen tests locally, and record the tester-reported successful GitHub Actions run. Finish the product-details pull request and verify its latest checks before merging.
+7. **Planned:** add the cart and checkout cases, then the `error_user` sorting variant.
+8. **Planned:** review failures, file reproducible issues, and write the release report with the actual tested account scope.
 
 Selenium Grid can be added as a separate infrastructure extension. It is not required to begin implementing these cases.
