@@ -1,6 +1,8 @@
 package com.codecool.webshop.pages;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -104,6 +106,17 @@ public class ProductsPage extends BasePage {
         WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(sortDropdown));
         Select sortSelect = new Select(dropdown);
         sortSelect.selectByVisibleText(optionText);
+    }
+
+    public String acceptSortingAlertIfPresent() {
+        try {
+            Alert alert = driver.switchTo().alert();
+            String message = alert.getText();
+            alert.accept();
+            return message;
+        } catch (NoAlertPresentException exception) {
+            return "";
+        }
     }
 
     public String getSelectedSortOption() {
