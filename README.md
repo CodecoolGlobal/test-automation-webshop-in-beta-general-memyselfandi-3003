@@ -9,11 +9,11 @@ The project follows the Page Object Model with `BaseTest` and `BasePage`. Config
 - [Test cases](TEST_CASES.md): the initial positive and negative cases and selected test accounts.
 - [Exploratory testing](exploratory%20testing.md): manual observations, failures, and open questions for all six accounts.
 
-The login suite uses `standard_user` for successful login and invalid/missing-credential cases, and `locked_out_user` for account-restriction coverage. Other selected account-specific cases remain planned. Testing these login scenarios does not establish that every feature works for every account.
+The login suite uses `standard_user` for successful login and invalid/missing-credential cases, and `locked_out_user` for account-restriction coverage. Logout coverage uses `standard_user`. Other selected account-specific cases remain planned. Testing these login scenarios does not establish that every feature works for every account.
 
 ## Current implementation
 
-**Five login cases are implemented:** one positive case and four negative cases.
+**Seven cases are implemented:** five login cases and two logout cases.
 
 | Case | Scenario |
 | --- | --- |
@@ -22,11 +22,23 @@ The login suite uses `standard_user` for successful login and invalid/missing-cr
 | TC-LOGIN-03 | An empty username produces the expected required-field error and leaves the login page open. |
 | TC-LOGIN-04 | An empty password produces the expected required-field error and leaves the login page open. |
 | TC-LOGIN-05 | Valid credentials for the locked account produce the expected restriction error and leave the login page open. |
+| TC-LOGOUT-01 | Logout returns the user to the original login URL and displays the Login button. |
+| TC-LOGOUT-02 | After logout, browser Back and direct inventory-URL navigation both require the login form and show no product cards. |
 
 The initial GitHub Actions run on **17 November 2026** completed successfully: **1 test, 0 failures, 0 errors, and 0 skipped tests**. The Surefire results were uploaded and downloaded as the `test-results` artifact.
 
-The tester reported that all five login cases passed locally on **17 November 2026**. The workflow for the expanded login suite then completed successfully in **GitHub Actions run #5**, using commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The test and report-upload steps both succeeded. The remaining **17 logical cases** are planned, not implemented. No release recommendation has been made.
+The tester reported that all five login cases passed locally on **17 November 2026**. The workflow for the expanded login suite then completed successfully in **GitHub Actions run #5**, using commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The test and report-upload steps both succeeded. The remaining **15 logical cases** are planned, not implemented. No release recommendation has been made.
 
+
+**Latest local verification — 17 November 2026:** a combined Maven run with `CI=true` completed successfully in headless Chrome:
+
+| Test class | Tests | Failures | Errors | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| `LoginTest` | 5 | 0 | 0 | 0 |
+| `LogoutTest` | 2 | 0 | 0 | 0 |
+| **Total** | **7** | **0** | **0** | **0** |
+
+Evidence is available in the generated XML/text reports under `target/surefire-reports/`. The local Maven runtime used Java 25.0.4.1 and compiled with release 17; the installed Chrome version was 157.0.8103.78 on Windows. GitHub Actions verification of this seven-test version is pending; the successful CI run referenced above covers the earlier five-login-test version.
 ## Local setup
 
 Requirements: JDK 17 or newer and Google Chrome. Use IntelliJ IDEA's Maven integration or an installed Maven command-line distribution.
@@ -49,7 +61,7 @@ The example intentionally leaves the password empty. Fill it in only in your loc
 
 ## Run the test locally
 
-In IntelliJ, open `LoginTest` and run the class using its green run icon to execute all five login cases. The working directory must be the repository root so the `.env` file can be found.
+In IntelliJ, run `LoginTest` for the five login cases or `LogoutTest` for the two logout cases. Use the Maven `test` phase to execute the complete seven-test suite. The working directory must be the repository root so the `.env` file can be found.
 
 Alternatively, run the Maven `test` lifecycle phase from IntelliJ's Maven tool window. If Maven is installed on your command line, run this from the repository root:
 
@@ -117,6 +129,7 @@ src/test/java/com/codecool/webshop/
     tests/
         BaseTest.java          Configuration, browser setup, and teardown
         LoginTest.java         Login assertions
+        LogoutTest.java        Logout and post-logout access assertions
 .env.example                   Configuration template without a password
 pom.xml                        Dependencies and Maven plugins
 ```
@@ -125,7 +138,7 @@ Page objects contain browser interactions; tests contain JUnit assertions. Expli
 
 ## Next steps
 
-1. Review and merge the login-test pull request after its checks pass.
-2. Implement logout and post-logout access checks.
+1. Verify the seven-test suite in GitHub Actions and retain its reports.
+2. Review and merge the logout-test pull request after its checks pass.
 3. Implement the other selected cases and create reproducible defect tickets.
 4. Execute the expanded suite and write the release status report.
