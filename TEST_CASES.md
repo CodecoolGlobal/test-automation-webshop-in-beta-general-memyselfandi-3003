@@ -1,6 +1,6 @@
 # SauceDemo — Test Cases
 
-This is the initial test specification for [SauceDemo](https://www.saucedemo.com/), based on manual exploration. It contains **22 logical test cases** across the six required user stories, with **1–5 cases per story**. All cases are **planned and not yet formally executed**. Observations from exploration do not count as execution results for this specification.
+This is the initial test specification for [SauceDemo](https://www.saucedemo.com/), based on manual exploration. It contains **22 logical test cases** across the six required user stories, with **1–5 cases per story**. **TC-LOGIN-01 through TC-LOGIN-05 are implemented and were reported as passing in a local automated run on 17 November 2026.** The remaining 17 logical cases are planned and not implemented. The expanded login-suite workflow succeeded in **GitHub Actions run #5** for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). Initial exploratory observations are kept separate from automated execution results.
 
 ## Scope and accounts
 
@@ -42,7 +42,7 @@ This selection provides a manageable starting scope. It does not establish that 
 | TC-LOGIN-04 | Missing password — Negative | Enter `standard_user`. Leave Password empty. Select Login. | Authentication is rejected and a visible message identifies the missing password. |
 | TC-LOGIN-05 | Locked account — Negative | Enter `locked_out_user` and its valid password. Select Login. | Authentication is rejected and a visible message identifies the account restriction. The product list does not appear. |
 
-**Exploration note:** rejection of the locked account was observed. Record the exact message during formal execution before deciding whether to assert its complete wording.
+**Automation status:** all five cases are implemented in `LoginTest`. Negative cases wait for the visible login error, assert its exact text, and check that the login URL is unchanged. TC-LOGIN-05 expects: `Epic sadface: Sorry, this user has been locked out.` The tester reported that all five cases passed locally. The expanded login-suite workflow also succeeded in GitHub Actions run #5, including its test and report-upload steps.
 
 ## US-02 — Log out
 
@@ -110,7 +110,7 @@ For each sorting case, capture the product identities before sorting and verify 
 
 **Assertion limit:** checking arithmetic with the displayed tax does not verify the correctness of the tax policy. A tax-rate expectation requires a separate business rule. No special postal-code format is assumed by this plan.
 
-## Coverage summary
+## Planned coverage summary
 
 | User story | Logical cases | Account-specific executions |
 | --- | ---: | ---: |
@@ -140,21 +140,28 @@ Keep these findings in defect tracking or exploratory notes. Expand automation a
 
 ## Execution results and issue links
 
-Record each account-specific execution separately using this format:
+**Local verification, 17 November 2026:** the tester reported that all five automated login cases passed when running the `LoginTest` class. The table below records that local report. The subsequent CI workflow result is documented separately below; individual CI results can be inspected in the Surefire artifact. The initial single-test CI verification is recorded in the README.
 
-| Case ID | Account | Result | Actual result / evidence | Issue |
+| Case ID | Account / input | Local result | Evidence | Issue |
 | --- | --- | --- | --- | --- |
-| TC-LOGIN-01 | `standard_user` | Not Run | — | — |
-| TC-SORT-03 | `error_user` | Not Run | — | — |
+| TC-LOGIN-01 | `standard_user`, valid credentials | Pass | Tester-reported local JUnit run | — |
+| TC-LOGIN-02 | `standard_user`, incorrect password | Pass | Tester-reported local JUnit run | — |
+| TC-LOGIN-03 | Empty username, valid password | Pass | Tester-reported local JUnit run | — |
+| TC-LOGIN-04 | `standard_user`, empty password | Pass | Tester-reported local JUnit run | — |
+| TC-LOGIN-05 | `locked_out_user`, valid password | Pass | Tester-reported local JUnit run | — |
 
-Allowed results: **Not Run**, **Pass**, **Fail**, and **Blocked**. The rows above are examples and do not represent completed executions. Record a blocker and its issue when applicable. Never mark an unexecuted case as passed based on another account's result.
+**CI verification, 17 November 2026:** GitHub Actions run **#5**, for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks), completed successfully. The workflow's **Run tests** and **Upload test results** steps both succeeded. The `test-results` artifact contains the Surefire reports for the detailed per-case CI results. Browser and OS versions for the tester's local run have not been recorded here.
+
+The remaining 17 logical cases, including the planned `error_user` sorting variant, are **Not Run** and not implemented. Record each later account-specific execution separately with the result, actual behavior, evidence, and related issue where applicable.
+
+Allowed results: **Not Run**, **Pass**, **Fail**, and **Blocked**. Record a blocker and its issue when applicable. Never mark an unexecuted case as passed based on another account's result.
 
 ## Implementation order
 
-1. Initialize the Java/Maven project with Selenium, JUnit, and separate page objects.
-2. Implement TC-LOGIN-01 with isolated browser setup and reliable teardown.
-3. Run the same case locally and in GitHub Actions; retain readable results and failure evidence.
-4. Add the remaining core cases, then the `error_user` sorting variant.
-5. Review failures, file reproducible issues, and write the release report with the actual tested account scope.
+1. **Completed:** initialize the Java/Maven project with Selenium, JUnit, separate page objects, and isolated browser sessions.
+2. **Completed:** implement the five login cases and obtain a tester-reported successful local run.
+3. **Completed:** verify the expanded login-suite workflow in GitHub Actions run #5; the test and Surefire report-upload steps succeeded.
+4. **Planned:** add the remaining core cases, then the `error_user` sorting variant.
+5. **Planned:** review failures, file reproducible issues, and write the release report with the actual tested account scope.
 
 Selenium Grid can be added as a separate infrastructure extension. It is not required to begin implementing these cases.

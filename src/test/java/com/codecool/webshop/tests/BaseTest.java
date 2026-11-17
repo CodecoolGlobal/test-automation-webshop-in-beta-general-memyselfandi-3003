@@ -12,21 +12,26 @@ import java.util.Map;
 public abstract class BaseTest {
     protected WebDriver driver;
     protected String baseUrl;
-    protected String testUsername;
+    protected String standardUsername;
+    protected String lockedUsername;
     protected String testPassword;
 
     @BeforeEach
     public void setUp() {
         Dotenv dotenv = Dotenv.load();
+
         baseUrl = dotenv.get("BASE_URL");
-        testUsername = dotenv.get("TEST_USERNAME");
+        standardUsername = dotenv.get("STANDARD_USERNAME");
+        lockedUsername = dotenv.get("LOCKED_USERNAME");
         testPassword = dotenv.get("TEST_PASSWORD");
 
         if (baseUrl == null || baseUrl.isBlank()
-                || testUsername == null || testUsername.isBlank()
+                || standardUsername == null || standardUsername.isBlank()
+                || lockedUsername == null || lockedUsername.isBlank()
                 || testPassword == null || testPassword.isBlank()) {
             throw new IllegalStateException(
-                    "Set BASE_URL, TEST_USERNAME and TEST_PASSWORD in the project-root .env file.");
+                    "Set BASE_URL, STANDARD_USERNAME, LOCKED_USERNAME "
+                            + "and TEST_PASSWORD in the project-root .env file.");
         }
 
         baseUrl = baseUrl.replaceAll("/+$", "");
