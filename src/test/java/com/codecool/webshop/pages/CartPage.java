@@ -55,6 +55,10 @@ public class CartPage extends BasePage {
         wait.until(ExpectedConditions.invisibilityOf(removeButton));
     }
 
+    public void startCheckout() {
+        click(By.id("checkout"));
+    }
+
     public void continueShopping() {
         click(continueShoppingButton);
     }
