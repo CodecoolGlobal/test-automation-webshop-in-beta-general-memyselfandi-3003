@@ -1,6 +1,6 @@
 # SauceDemo — Test Cases
 
-This is the initial test specification for [SauceDemo](https://www.saucedemo.com/), based on manual exploration. It contains **22 logical test cases** across the six required user stories, with **1–5 cases per story**. **TC-LOGIN-01 through TC-LOGIN-05 and TC-LOGOUT-01 through TC-LOGOUT-02 are implemented. A combined local headless Maven run on 17 November 2026 passed all seven cases with no failures, errors, or skipped tests.** The remaining 15 logical cases are planned and not implemented. The earlier five-login-test workflow succeeded in **GitHub Actions run #5** for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). CI verification of the current seven-test version is pending. Initial exploratory observations are kept separate from automated execution results.
+This is the initial test specification for [SauceDemo](https://www.saucedemo.com/), based on manual exploration. It contains **22 logical test cases** across the six required user stories, with **1–5 cases per story**. **TC-LOGIN-01 through TC-LOGIN-05 and TC-LOGOUT-01 through TC-LOGOUT-02 are implemented. A combined local headless Maven run on 17 November 2026 passed all seven cases with no failures, errors, or skipped tests.** The remaining 15 logical cases are planned and not implemented. The earlier five-login-test workflow succeeded in **GitHub Actions run #5** for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The current seven-test workflow succeeded in [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619) for commit `ede1771`. Initial exploratory observations are kept separate from automated execution results.
 
 ## Scope and accounts
 
@@ -53,7 +53,7 @@ This selection provides a manageable starting scope. It does not establish that 
 | TC-LOGOUT-01 | End the session — Positive | Sign in. Open the navigation menu. Select Logout. | The login page appears and authenticated controls are no longer available. |
 | TC-LOGOUT-02 | Protected-page access after logout — Negative | Sign in and record the product-list URL. Log out. Use browser Back and inspect the page. Then navigate directly to the recorded URL. | Neither route restores usable authenticated product content. The application requires authentication again. |
 
-**Exploration note:** manual logout was observed to work for all accounts that could sign in. **Automation status:** both cases are implemented in `LogoutTest` using `standard_user`, and passed in the combined local headless Maven run. TC-LOGOUT-02 checks browser Back first and direct URL navigation second; if the first attempt fails, the second is not reached in that execution. A visible login form and zero matching product cards are required after each attempt. Current-version CI verification is pending.
+**Exploration note:** manual logout was observed to work for all accounts that could sign in. **Automation status:** both cases are implemented in `LogoutTest` using `standard_user`, and passed in the combined local headless Maven run. TC-LOGOUT-02 checks browser Back first and direct URL navigation second; if the first attempt fails, the second is not reached in that execution. A visible login form and zero matching product cards are required after each attempt. The seven-test workflow also succeeded in GitHub Actions run #9, including test execution and report upload.
 
 ## US-03 — Browse an ordered product list
 
@@ -162,7 +162,7 @@ Local verification details:
 
 **Earlier CI evidence:** GitHub Actions run **#5**, for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks), completed successfully with the five-login-test version. Its test and report-upload steps succeeded.
 
-**Current-version CI status:** the expanded seven-test suite still needs verification in GitHub Actions. The earlier successful run does not establish the CI result for the two new logout cases.
+**Current-version CI verification, 17 November 2026:** [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619), for commit `ede1771`, completed successfully in **29 seconds**. Its **Run tests** and **Upload test results** steps succeeded for the seven-test login/logout version. The workflow summary provides the run-level evidence; the `test-results` artifact contains the detailed Surefire reports.
 
 The remaining 15 logical cases, including the planned `error_user` sorting variant, are **Not Run** and not implemented. Record each later account-specific execution separately with its result, actual behavior, evidence, and related issue where applicable.
 
@@ -173,7 +173,7 @@ Allowed results: **Not Run**, **Pass**, **Fail**, and **Blocked**. Record a bloc
 1. **Completed:** initialize the Java/Maven project with Selenium, JUnit, separate page objects, and isolated browser sessions.
 2. **Completed:** implement five login cases and verify their workflow in GitHub Actions run #5.
 3. **Completed locally:** implement two logout cases and verify the complete seven-test suite in a headless Maven run.
-4. **Next:** verify the seven-test version in GitHub Actions and retain its results before merging the logout changes.
+4. **Completed:** verify the seven-test workflow in GitHub Actions run #9; test execution and report upload succeeded. The logout pull request remains to be reviewed and merged.
 5. **Planned:** add the remaining core cases, then the `error_user` sorting variant.
 6. **Planned:** review failures, file reproducible issues, and write the release report with the actual tested account scope.
 

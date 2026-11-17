@@ -29,7 +29,6 @@ The initial GitHub Actions run on **17 November 2026** completed successfully: *
 
 The tester reported that all five login cases passed locally on **17 November 2026**. The workflow for the expanded login suite then completed successfully in **GitHub Actions run #5**, using commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The test and report-upload steps both succeeded. The remaining **15 logical cases** are planned, not implemented. No release recommendation has been made.
 
-
 **Latest local verification — 17 November 2026:** a combined Maven run with `CI=true` completed successfully in headless Chrome:
 
 | Test class | Tests | Failures | Errors | Skipped |
@@ -38,7 +37,8 @@ The tester reported that all five login cases passed locally on **17 November 20
 | `LogoutTest` | 2 | 0 | 0 | 0 |
 | **Total** | **7** | **0** | **0** | **0** |
 
-Evidence is available in the generated XML/text reports under `target/surefire-reports/`. The local Maven runtime used Java 25.0.4.1 and compiled with release 17; the installed Chrome version was 157.0.8103.78 on Windows. GitHub Actions verification of this seven-test version is pending; the successful CI run referenced above covers the earlier five-login-test version.
+Evidence is available in the generated XML/text reports under `target/surefire-reports/`. The local Maven runtime used Java 25.0.4.1 and compiled with release 17; the installed Chrome version was 157.0.8103.78 on Windows. The seven-test version also completed successfully in [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619) on **17 November 2026**, for commit `ede1771`. The job finished in **29 seconds**; both the test and report-upload steps succeeded.
+
 ## Local setup
 
 Requirements: JDK 17 or newer and Google Chrome. Use IntelliJ IDEA's Maven integration or an installed Maven command-line distribution.
@@ -138,7 +138,6 @@ Page objects contain browser interactions; tests contain JUnit assertions. Expli
 
 ## Next steps
 
-1. Verify the seven-test suite in GitHub Actions and retain its reports.
-2. Review and merge the logout-test pull request after its checks pass.
-3. Implement the other selected cases and create reproducible defect tickets.
-4. Execute the expanded suite and write the release status report.
+1. Review and merge the logout-test pull request after its checks pass.
+2. Implement the other selected cases and create reproducible defect tickets.
+3. Execute the expanded suite and write the release status report.
