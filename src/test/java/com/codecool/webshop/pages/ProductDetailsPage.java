@@ -22,6 +22,18 @@ public class ProductDetailsPage extends BasePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(productImage));
     }
 
+    public void addProductToCart() {
+        click(By.id("add-to-cart"));
+    }
+
+    public void removeProductFromCart() {
+        click(By.id("remove"));
+    }
+
+    public String getCartButtonText() {
+        return driver.findElement(By.cssSelector(".inventory_details_desc_container button")).getText();
+    }
+
     public String getProductName() {
         return driver.findElement(productName).getText();
     }

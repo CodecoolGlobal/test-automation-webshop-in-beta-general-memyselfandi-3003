@@ -1,6 +1,6 @@
 # SauceDemo — Test Cases
 
-This is the initial test specification for [SauceDemo](https://www.saucedemo.com/), based on manual exploration. It contains **22 logical test cases** across the six required user stories, with **1–5 cases per story**. **TC-LOGIN-01 through TC-LOGIN-05, TC-LOGOUT-01 through TC-LOGOUT-02, the four standard-user sorting cases, and TC-PRODUCT-01 through TC-PRODUCT-02 are implemented. A combined local headless Maven run on 17 November 2026 passed all thirteen executions with no failures, errors, or skipped tests.** The remaining 9 logical cases and the additional `error_user` execution of TC-SORT-03 are planned and not implemented. The earlier five-login-test workflow succeeded in **GitHub Actions run #5** for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The earlier seven-test workflow succeeded in [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619) for commit `ede1771`. The push workflow for the eleven-test version succeeded for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks); its `test` job took 56 seconds, as shown in the user-provided workflow summary. Initial exploratory observations are kept separate from automated execution results.
+This is the initial test specification for [SauceDemo](https://www.saucedemo.com/), based on manual exploration. It contains **22 logical test cases** across the six required user stories, with **1–5 cases per story**. **TC-LOGIN-01 through TC-LOGIN-05, TC-LOGOUT-01 through TC-LOGOUT-02, the four standard-user sorting cases, TC-PRODUCT-01 through TC-PRODUCT-02, and TC-CART-01 through TC-CART-04 are implemented. A combined local headless Maven run on 17 November 2026 passed all seventeen executions with no failures, errors, or skipped tests.** The remaining 5 logical cases and the additional `error_user` execution of TC-SORT-03 are planned and not implemented. The earlier five-login-test workflow succeeded in **GitHub Actions run #5** for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The earlier seven-test workflow succeeded in [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619) for commit `ede1771`. The push workflow for the eleven-test version succeeded for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks); its `test` job took 56 seconds, as shown in the user-provided workflow summary. Initial exploratory observations are kept separate from automated execution results.
 
 ## Scope and accounts
 
@@ -94,7 +94,7 @@ For each sorting case, capture the product identities before sorting and verify 
 | TC-CART-03 | Remove from the cart page — Positive | Sign in. Add the primary product. Open the cart and select its Remove button. Return to the product list. | The product disappears from the cart, no positive cart count remains, and the list displays Add to cart for that product. |
 | TC-CART-04 | Several distinct products — Positive | Sign in. Add the primary and secondary products. Open the cart. Remove only the primary product. | Initially the cart contains exactly the two selected products with the expected names and prices, and the count is 2. Removing one leaves the other unchanged and the count becomes 1. |
 
-**Exploration note:** list and cart-page removal were observed for `standard_user`. Detail-page add/remove for that account remains to be verified.
+**Automation status:** all four cases are implemented in `CartTest` for `standard_user` and passed in the combined seventeen-test local headless run. Each case starts in a fresh authenticated browser session. Assertions inspect actual cart rows, exact product names, numeric prices captured from the list, quantities, badge counts, and relevant Add to cart / Remove buttons. The two-product case checks both original products and then confirms that removing Backpack leaves only Bike Light with its original price and quantity. The cart header helpers are shared in `BasePage`; list, detail, and cart-specific actions remain in their page objects. Reset App State is not used for cleanup.
 
 ## US-06 — Check out
 
@@ -142,7 +142,7 @@ Keep these findings in defect tracking or exploratory notes. Expand automation a
 
 ## Execution results and issue links
 
-**Local headless Maven run, 17 November 2026:** the complete suite passed with **13 tests, 0 failures, 0 errors, and 0 skipped tests**. This result was verified from the generated Surefire reports, rather than inferred from exploratory notes.
+**Local headless Maven run, 17 November 2026:** the complete suite passed with **17 tests, 0 failures, 0 errors, and 0 skipped tests**. This result was verified from the generated Surefire reports, rather than inferred from exploratory notes.
 
 | Case ID | Account / input | Local result | Evidence | Issue |
 | --- | --- | --- | --- | --- |
@@ -160,6 +160,10 @@ Keep these findings in defect tracking or exploratory notes. Expand automation a
 | TC-SORT-04 | `standard_user`, Price high–low | Pass | Local Maven / Surefire | — |
 | TC-PRODUCT-01 | `standard_user`, Backpack image | Pass | Local Maven / Surefire | — |
 | TC-PRODUCT-02 | `standard_user`, Backpack name | Pass | Local Maven / Surefire | — |
+| TC-CART-01 | `standard_user`, add/remove from list | Pass | Local Maven / Surefire | — |
+| TC-CART-02 | `standard_user`, add/remove from details | Pass | Local Maven / Surefire | — |
+| TC-CART-03 | `standard_user`, remove from cart | Pass | Local Maven / Surefire | — |
+| TC-CART-04 | `standard_user`, two distinct products | Pass | Local Maven / Surefire | — |
 
 Local verification details:
 
@@ -167,7 +171,7 @@ Local verification details:
 - Java runtime: 25.0.4.1; compiler release: 17.
 - Operating system: Windows.
 - Installed Chrome: 157.0.8103.78.
-- Reports: `target/surefire-reports/TEST-com.codecool.webshop.tests.LoginTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.LogoutTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.ProductSortingTest.xml`, and `target/surefire-reports/TEST-com.codecool.webshop.tests.ProductDetailsTest.xml`, with their corresponding `.txt` summaries.
+- Reports: `target/surefire-reports/TEST-com.codecool.webshop.tests.LoginTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.LogoutTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.ProductSortingTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.ProductDetailsTest.xml`, and `target/surefire-reports/TEST-com.codecool.webshop.tests.CartTest.xml`, with their corresponding `.txt` summaries.
 
 **Earlier CI evidence:** GitHub Actions run **#5**, for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks), completed successfully with the five-login-test version. Its test and report-upload steps succeeded.
 
@@ -175,9 +179,11 @@ Local verification details:
 
 **Eleven-test push CI verification, 17 November 2026:** The push workflow for the eleven-test version also succeeded on **17 November 2026**, for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks). The user-provided GitHub Actions summary shows a successful `test` job with a duration of **56 seconds**. This is workflow-level evidence; the summary records success for that earlier eleven-test version.
 
-**Current thirteen-test version:** The thirteen-test version passed locally. On **17 November 2026**, the tester also reported that all tests passed in GitHub Actions for the product-details version, commit [`7085166`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/7085166d30cf0f056faf8a58455e6c51ad1773ef/checks). Local counts were verified from Surefire reports; the CI result is based on the tester's confirmation.
+**Earlier thirteen-test version:** The thirteen-test version passed locally. On **17 November 2026**, the tester also reported that all tests passed in GitHub Actions for the product-details version, commit [`7085166`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/7085166d30cf0f056faf8a58455e6c51ad1773ef/checks). Local counts were verified from Surefire reports; the CI result is based on the tester's confirmation.
 
-The remaining 9 logical cases and the additional `error_user` execution of TC-SORT-03 are **Not Run** and not implemented. Record each later account-specific execution separately with its result, actual behavior, evidence, and related issue where applicable.
+**Current seventeen-test version:** verified locally on 17 November 2026. Its first GitHub Actions run is pending the cart branch push.
+
+The remaining 5 logical cases and the additional `error_user` execution of TC-SORT-03 are **Not Run** and not implemented. Record each later account-specific execution separately with its result, actual behavior, evidence, and related issue where applicable.
 
 Allowed results: **Not Run**, **Pass**, **Fail**, and **Blocked**. Record a blocker and its issue when applicable. Never mark an unexecuted case as passed based on another account's result.
 
@@ -188,8 +194,9 @@ Allowed results: **Not Run**, **Pass**, **Fail**, and **Blocked**. Record a bloc
 3. **Completed locally:** implement two logout cases and verify the complete seven-test suite in a headless Maven run.
 4. **Completed:** verify the seven-test workflow in GitHub Actions run #9; test execution and report upload succeeded. The logout pull request was merged into `main` before starting the sorting branch.
 5. **Completed:** implement four standard-user sorting cases, verify the complete eleven-test suite locally, and verify the successful push workflow (56-second `test` job). The sorting pull request was merged into `main` before starting the product-details branch.
-6. **Completed:** implement and review both product-detail navigation cases, verify all thirteen tests locally, and record the tester-reported successful GitHub Actions run. Finish the product-details pull request and verify its latest checks before merging.
-7. **Planned:** add the cart and checkout cases, then the `error_user` sorting variant.
-8. **Planned:** review failures, file reproducible issues, and write the release report with the actual tested account scope.
+6. **Completed:** implement and review both product-detail navigation cases, verify all thirteen tests locally, and record the tester-reported successful GitHub Actions run. The product-details pull request was merged into `main` before starting the cart branch.
+7. **Completed locally:** implement the four cart cases and verify the complete seventeen-test suite. Code review, push, CI, and the cart pull request remain pending.
+8. **Planned:** add the five checkout cases, then the `error_user` sorting variant.
+9. **Planned:** review failures, file reproducible issues, and write the release report with the actual tested account scope.
 
 Selenium Grid can be added as a separate infrastructure extension. It is not required to begin implementing these cases.

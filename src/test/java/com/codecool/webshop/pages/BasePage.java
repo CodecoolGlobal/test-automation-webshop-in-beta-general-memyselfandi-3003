@@ -1,6 +1,7 @@
 package com.codecool.webshop.pages;
 
 import java.time.Duration;
+import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,6 +12,8 @@ public abstract class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
     protected String baseUrl;
+    private final By cartLink = By.cssSelector(".shopping_cart_link");
+    private final By cartBadge = By.cssSelector(".shopping_cart_badge");
 
     public BasePage(WebDriver driver, String baseUrl) {
         this.driver = driver;
@@ -33,6 +36,18 @@ public abstract class BasePage {
     protected void openPage(String path, By readyElement) {
         driver.get(baseUrl + path);
         wait.until(ExpectedConditions.visibilityOfElementLocated(readyElement));
+    }
+
+    public void openCart() {
+        click(cartLink);
+    }
+
+    public int getCartItemCount() {
+        List<WebElement> badges = driver.findElements(cartBadge);
+        if (badges.isEmpty()) {
+            return 0;
+        }
+        return Integer.parseInt(badges.get(0).getText());
     }
 
     public String getCurrentUrl() {
