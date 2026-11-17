@@ -1,6 +1,7 @@
 package com.codecool.webshop.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -43,6 +44,44 @@ public class ProductsPage extends BasePage {
     public void logout() {
         click(menuButton);
         click(logoutLink);
+    }
+
+    public double getProductPrice(String productName) {
+        String priceText = getProductCard(productName).findElement(productPrices).getText();
+        return Double.parseDouble(priceText.replace("$", "").trim());
+    }
+
+    public String getProductDescription(String productName) {
+        return getProductCard(productName)
+                .findElement(By.cssSelector(".inventory_item_desc")).getText();
+    }
+
+    public String getProductImageSource(String productName) {
+        return getProductCard(productName)
+                .findElement(By.cssSelector(".inventory_item_img img")).getDomProperty("src");
+    }
+
+    public void openProductByImage(String productName) {
+        WebElement imageLink = getProductCard(productName)
+                .findElement(By.cssSelector(".inventory_item_img a"));
+        wait.until(ExpectedConditions.elementToBeClickable(imageLink)).click();
+    }
+
+    public void openProductByName(String productName) {
+        WebElement nameLink = getProductCard(productName)
+                .findElement(By.cssSelector(".inventory_item_label a"));
+        wait.until(ExpectedConditions.elementToBeClickable(nameLink)).click();
+    }
+
+    private WebElement getProductCard(String productName) {
+        List<WebElement> cards = wait.until(
+                ExpectedConditions.visibilityOfAllElementsLocatedBy(products));
+        for (WebElement card : cards) {
+            if (card.findElement(productNames).getText().equals(productName)) {
+                return card;
+            }
+        }
+        throw new NoSuchElementException("Product not found in the list: " + productName);
     }
 
     public void sortProductsBy(String optionText) {

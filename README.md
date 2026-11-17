@@ -13,7 +13,7 @@ The login suite uses `standard_user` for successful login and invalid/missing-cr
 
 ## Current implementation
 
-**Eleven logical cases are implemented:** five login cases, two logout cases, and four sorting cases using `standard_user`. The additional `error_user` execution of TC-SORT-03 remains planned.
+**Thirteen logical cases are implemented:** five login cases, two logout cases, four sorting cases, and two product-detail cases. Sorting, logout, and product-detail cases use `standard_user`. The additional `error_user` execution of TC-SORT-03 remains planned.
 
 | Case | Scenario |
 | --- | --- |
@@ -28,10 +28,12 @@ The login suite uses `standard_user` for successful login and invalid/missing-cr
 | TC-SORT-02 | Name Z–A displays every original product name in descending order. |
 | TC-SORT-03 | Price low–high orders the complete numeric price list and preserves all product names. Implemented for `standard_user`; the `error_user` variant remains planned. |
 | TC-SORT-04 | Price high–low orders the complete numeric price list and preserves all product names. |
+| TC-PRODUCT-01 | Clicking the Backpack image opens its details; name, numeric price, description, and image source match the list. |
+| TC-PRODUCT-02 | Clicking the Backpack name opens the corresponding details with the same cross-page checks. |
 
 The initial GitHub Actions run on **17 November 2026** completed successfully: **1 test, 0 failures, 0 errors, and 0 skipped tests**. The Surefire results were uploaded and downloaded as the `test-results` artifact.
 
-The tester reported that all five login cases passed locally on **17 November 2026**. The workflow for the expanded login suite then completed successfully in **GitHub Actions run #5**, using commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The test and report-upload steps both succeeded. The remaining **11 logical cases** and the additional `error_user` sorting execution are planned, not implemented. No release recommendation has been made.
+The tester reported that all five login cases passed locally on **17 November 2026**. The workflow for the expanded login suite then completed successfully in **GitHub Actions run #5**, using commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The test and report-upload steps both succeeded. The remaining **9 logical cases** and the additional `error_user` sorting execution are planned, not implemented. No release recommendation has been made.
 
 **Latest local verification — 17 November 2026:** a combined Maven run with `CI=true` completed successfully in headless Chrome:
 
@@ -40,9 +42,12 @@ The tester reported that all five login cases passed locally on **17 November 20
 | `LoginTest` | 5 | 0 | 0 | 0 |
 | `LogoutTest` | 2 | 0 | 0 | 0 |
 | `ProductSortingTest` | 4 | 0 | 0 | 0 |
-| **Total** | **11** | **0** | **0** | **0** |
+| `ProductDetailsTest` | 2 | 0 | 0 | 0 |
+| **Total** | **13** | **0** | **0** | **0** |
 
-Evidence is available in the generated XML/text reports under `target/surefire-reports/`. The local Maven runtime used Java 25.0.4.1 and compiled with release 17; the installed Chrome version was 157.0.8103.78 on Windows. The earlier seven-test version also completed successfully in [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619) on **17 November 2026**, for commit `ede1771`. The job finished in **29 seconds**; both the test and report-upload steps succeeded. The push workflow for the eleven-test version also succeeded on **17 November 2026**, for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks). The user-provided GitHub Actions summary shows a successful `test` job with a duration of **56 seconds**. This is workflow-level evidence; the exact eleven-test counts above were verified locally from Surefire reports.
+Evidence is available in the generated XML/text reports under `target/surefire-reports/`. The local Maven runtime used Java 25.0.4.1 and compiled with release 17; the installed Chrome version was 157.0.8103.78 on Windows. The earlier seven-test version also completed successfully in [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619) on **17 November 2026**, for commit `ede1771`. The job finished in **29 seconds**; both the test and report-upload steps succeeded. The push workflow for the eleven-test version also succeeded on **17 November 2026**, for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks). The user-provided GitHub Actions summary shows a successful `test` job with a duration of **56 seconds**. This is workflow-level evidence; the summary records success for that earlier eleven-test version.
+
+The new thirteen-test version passed locally; its first GitHub Actions run is pending the product-details branch push.
 
 ## Local setup
 
@@ -66,7 +71,7 @@ The example intentionally leaves the password empty. Fill it in only in your loc
 
 ## Run the test locally
 
-In IntelliJ, run `LoginTest` for the five login cases, `LogoutTest` for the two logout cases, or `ProductSortingTest` for the four sorting cases. Use the Maven `test` phase to execute the complete eleven-test suite. The working directory must be the repository root so the `.env` file can be found.
+In IntelliJ, run `LoginTest` for the five login cases, `LogoutTest` for the two logout cases, `ProductSortingTest` for the four sorting cases, or `ProductDetailsTest` for the two product-detail cases. Use the Maven `test` phase to execute the complete thirteen-test suite. The working directory must be the repository root so the `.env` file can be found.
 
 Alternatively, run the Maven `test` lifecycle phase from IntelliJ's Maven tool window. If Maven is installed on your command line, run this from the repository root:
 
@@ -130,12 +135,14 @@ src/test/java/com/codecool/webshop/
     pages/
         BasePage.java          Shared driver, waits, and field helpers
         LoginPage.java         Login form actions
-        ProductsPage.java      Product-list observations, sorting, and logout actions
+        ProductsPage.java      Product-list observations, sorting, logout, and product links
+        ProductDetailsPage.java Product-detail observations
     tests/
         BaseTest.java          Configuration, browser setup, and teardown
         LoginTest.java         Login assertions
         LogoutTest.java        Logout and post-logout access assertions
         ProductSortingTest.java Name and numeric price ordering assertions
+        ProductDetailsTest.java Image/name navigation and cross-page consistency assertions
 .env.example                   Configuration template without a password
 pom.xml                        Dependencies and Maven plugins
 ```
@@ -144,6 +151,6 @@ Page objects contain browser interactions; tests contain JUnit assertions. Expli
 
 ## Next steps
 
-1. Commit and push the CI-result documentation, then open the sorting pull request and check its PR workflow before merging.
+1. Review the product-detail implementation, then stage, commit, and push its branch. Verify CI and open its pull request.
 2. Implement the other selected cases, including the planned `error_user` sorting execution, and create reproducible defect tickets.
 3. Execute the expanded suite and write the release status report.
