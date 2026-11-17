@@ -30,13 +30,25 @@ public abstract class BaseTest {
         }
 
         baseUrl = baseUrl.replaceAll("/+$", "");
+
+        boolean isCi = "true".equals(System.getenv("CI"));
+
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", Map.of(
                 "credentials_enable_service", false,
                 "profile.password_manager_leak_detection", false
         ));
+
+        if (isCi) {
+            options.addArguments("--headless");
+            options.addArguments("--window-size=1920,1080");
+        }
+
         driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
+
+        if (!isCi) {
+            driver.manage().window().maximize();
+        }
     }
 
     @AfterEach
