@@ -70,6 +70,8 @@ On **17 November 2026**, [GitHub Actions run #32](https://github.com/CodecoolGlo
 
 ## Known failing test
 
+**Tracking:** [GitHub issue #8](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/8) (open); regression coverage is proposed in [PR #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/pull/9). The PR references the issue without closing it on merge.
+
 The full `mvn test` run includes `ErrorUserSortingTest` and currently returns a nonzero exit code. The application displays a Backtrace alert, reverts the selected sorting option to A–Z, and leaves the prices unsorted for `error_user`. The test still requires correct sorting; accepting the alert only allows inspection of the resulting state. It is not skipped or inverted to make the suite green. See [BUG-SORT-001](BUG_REPORTS.md#bug-sort-001--price-low-to-high-sorting-fails-for-error_user) for reproduction steps and evidence.
 
 The twenty-three-execution version has been verified locally and in GitHub Actions. The full workflow remains failing while this application defect persists. Earlier green CI results above belong to earlier suite versions.
@@ -184,6 +186,6 @@ Page objects contain browser interactions; tests contain JUnit assertions. Expli
 
 ## Next steps
 
-1. Commit and push the CI-result documentation, then review the error-user pull request with its documented failing case and BUG-SORT-001.
-2. Publish the prepared sorting defect report as an issue and create reports for the other reproducible exploratory failures.
+1. Review and merge [PR #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/pull/9) with its documented application failure, tracked in [GitHub issue #8](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/8). The full workflow remains red while the defect persists.
+2. Document the other reproducible exploratory failures and create their issue reports.
 3. Execute the expanded suite and write the release status report.

@@ -158,7 +158,7 @@ Keep these findings in defect tracking or exploratory notes. Expand automation a
 | TC-SORT-01 | `standard_user`, Name A–Z | Pass | Local Maven / Surefire | — |
 | TC-SORT-02 | `standard_user`, Name Z–A | Pass | Local Maven / Surefire | — |
 | TC-SORT-03 | `standard_user`, Price low–high | Pass | Local Maven / Surefire | — |
-| TC-SORT-03 | `error_user`, Price low–high | Fail | Local Maven / Surefire: alert, reverted option, unsorted prices | [BUG-SORT-001](BUG_REPORTS.md#bug-sort-001--price-low-to-high-sorting-fails-for-error_user); GitHub issue pending |
+| TC-SORT-03 | `error_user`, Price low–high | Fail | Local Maven / Surefire: alert, reverted option, unsorted prices | [BUG-SORT-001](BUG_REPORTS.md#bug-sort-001--price-low-to-high-sorting-fails-for-error_user); [GitHub issue #8](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/8) |
 | TC-SORT-04 | `standard_user`, Price high–low | Pass | Local Maven / Surefire | — |
 | TC-PRODUCT-01 | `standard_user`, Backpack image | Pass | Local Maven / Surefire | — |
 | TC-PRODUCT-02 | `standard_user`, Backpack name | Pass | Local Maven / Surefire | — |
@@ -206,7 +206,8 @@ Allowed results: **Not Run**, **Pass**, **Fail**, and **Blocked**. Record a bloc
 6. **Completed:** implement and review both product-detail navigation cases, verify all thirteen tests locally, and record the tester-reported successful GitHub Actions run. The product-details pull request was merged into `main` before starting the cart branch.
 7. **Completed:** implement and review the four cart cases, verify all seventeen tests locally, and verify the successful push workflow in GitHub Actions run #23 (1 minute 5 seconds). The cart pull request was merged into `main` before starting the checkout branch.
 8. **Completed:** implement the five checkout cases, verify all twenty-two tests locally, and record successful GitHub Actions run #27 with 22 tests, 0 failures, 0 errors, and 0 skipped tests. The checkout pull request was merged into `main` before starting the error-user sorting branch.
-9. **Completed:** implement and review the `error_user` sorting variant, execute all 23 tests (22 pass, 1 fail), prepare BUG-SORT-001, and verify the same result in GitHub Actions run #32. The error-user pull request still requires review with the documented application failure.
-10. **Planned:** publish the prepared bug report as an issue, document other reproducible exploratory failures, and write the release report with the actual tested account scope.
+9. **Completed:** implement and review the `error_user` sorting variant, execute all 23 tests (22 pass, 1 fail), prepare BUG-SORT-001, and verify the same result in GitHub Actions run #32. [PR #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/pull/9) is open and references [GitHub issue #8](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/8); user review and merge remain pending with the documented application failure.
+10. **Completed:** publish BUG-SORT-001 as [GitHub issue #8](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/8), label it as a bug, and reference it from [PR #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/pull/9) without an automatic closing keyword.
+11. **Planned:** document other reproducible exploratory failures and write the release report with the actual tested account scope.
 
 Selenium Grid can be added as a separate infrastructure extension. It is not required to begin implementing these cases.

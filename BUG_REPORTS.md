@@ -1,12 +1,14 @@
 # SauceDemo defect reports
 
-These reports are prepared locally for issue tracking. A local report ID does not mean a GitHub issue has been created.
+Reports include reproducible steps and evidence. Published reports link to their GitHub issues; the local BUG identifier remains stable.
 
 ## BUG-SORT-001 — Price low-to-high sorting fails for error_user
 
-**Status:** confirmed locally and in GitHub Actions run #32 on 17 November 2026; GitHub issue not created yet.
+**Status:** confirmed locally and in GitHub Actions run #32 on 17 November 2026; tracked as open [GitHub issue #8](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/8).
 
 **Related test:** TC-SORT-03, `error_user` variant, implemented in `ErrorUserSortingTest.sortErrorUserPricesAscending`.
+
+**Related pull request:** [PR #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/pull/9) adds regression coverage and documents the existing defect. The issue remains open after that PR is merged because the external webshop defect is not fixed by adding a test.
 
 **Impact:** the affected account cannot display the catalog in ascending price order. A visible error interrupts the action. The same sorting case passes for `standard_user` in the same full-suite run.
 
