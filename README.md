@@ -8,12 +8,13 @@ The project follows the Page Object Model with `BaseTest` and `BasePage`. Config
 
 - [Test cases](TEST_CASES.md): the initial positive and negative cases and selected test accounts.
 - [Exploratory testing](exploratory%20testing.md): manual observations, failures, and open questions for all six accounts.
+- [Defect reports](BUG_REPORTS.md): reproducible failures prepared for issue tracking.
 
-The login suite uses `standard_user` for successful login and invalid/missing-credential cases, and `locked_out_user` for account-restriction coverage. Logout coverage uses `standard_user`. Other selected account-specific cases remain planned. Testing these login scenarios does not establish that every feature works for every account.
+The login suite uses `standard_user` for successful login and invalid/missing-credential cases, and `locked_out_user` for account-restriction coverage. Logout coverage uses `standard_user`. A targeted price-sorting test also uses `error_user`; the remaining accounts retain exploratory coverage. Testing these login scenarios does not establish that every feature works for every account.
 
 ## Current implementation
 
-**Twenty-two logical cases have a baseline implementation:** five login cases, two logout cases, four sorting cases, two product-detail cases, four cart cases, and five checkout cases. Sorting, logout, product-detail, cart, and checkout cases use `standard_user`. The additional `error_user` execution of TC-SORT-03 remains planned.
+**Twenty-two logical cases have a baseline implementation:** five login cases, two logout cases, four sorting cases, two product-detail cases, four cart cases, and five checkout cases. Sorting, logout, product-detail, cart, and checkout cases use `standard_user`. The additional `error_user` execution of TC-SORT-03 is implemented, bringing the suite to **23 account-specific executions**. It fails on the confirmed application defect [BUG-SORT-001](BUG_REPORTS.md#bug-sort-001--price-low-to-high-sorting-fails-for-error_user).
 
 | Case | Scenario |
 | --- | --- |
@@ -26,7 +27,7 @@ The login suite uses `standard_user` for successful login and invalid/missing-cr
 | TC-LOGOUT-02 | After logout, browser Back and direct inventory-URL navigation both require the login form and show no product cards. |
 | TC-SORT-01 | Name A–Z restores ascending order after first selecting Z–A. Every original product name must remain. |
 | TC-SORT-02 | Name Z–A displays every original product name in descending order. |
-| TC-SORT-03 | Price low–high orders the complete numeric price list and preserves all product names. Implemented for `standard_user`; the `error_user` variant remains planned. |
+| TC-SORT-03 | Price low–high orders the complete numeric price list and preserves all product names. Implemented for both accounts: `standard_user` passes; `error_user` fails on BUG-SORT-001. |
 | TC-SORT-04 | Price high–low orders the complete numeric price list and preserves all product names. |
 | TC-PRODUCT-01 | Clicking the Backpack image opens its details; name, numeric price, description, and image source match the list. |
 | TC-PRODUCT-02 | Clicking the Backpack name opens the corresponding details with the same cross-page checks. |
@@ -42,9 +43,9 @@ The login suite uses `standard_user` for successful login and invalid/missing-cr
 
 The initial GitHub Actions run on **17 November 2026** completed successfully: **1 test, 0 failures, 0 errors, and 0 skipped tests**. The Surefire results were uploaded and downloaded as the `test-results` artifact.
 
-The tester reported that all five login cases passed locally on **17 November 2026**. The workflow for the expanded login suite then completed successfully in **GitHub Actions run #5**, using commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The test and report-upload steps both succeeded. All 22 logical cases now have a baseline implementation. The additional `error_user` execution of TC-SORT-03 remains planned and has not been run as an automated test. No release recommendation has been made.
+The tester reported that all five login cases passed locally on **17 November 2026**. The workflow for the expanded login suite then completed successfully in **GitHub Actions run #5**, using commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The test and report-upload steps both succeeded. All 22 logical cases now have a baseline implementation. The additional `error_user` execution is now implemented and reproduces BUG-SORT-001. No release recommendation has been made.
 
-**Latest local verification — 17 November 2026:** a combined Maven run with `CI=true` completed successfully in headless Chrome:
+**Latest local verification — 17 November 2026:** a combined Maven run with `CI=true` executed 23 tests in headless Chrome: **22 passed and 1 failed**, with no errors or skipped tests:
 
 | Test class | Tests | Failures | Errors | Skipped |
 | --- | ---: | ---: | ---: | ---: |
@@ -54,7 +55,8 @@ The tester reported that all five login cases passed locally on **17 November 20
 | `ProductDetailsTest` | 2 | 0 | 0 | 0 |
 | `CartTest` | 4 | 0 | 0 | 0 |
 | `CheckoutTest` | 5 | 0 | 0 | 0 |
-| **Total** | **22** | **0** | **0** | **0** |
+| `ErrorUserSortingTest` | 1 | 1 | 0 | 0 |
+| **Total** | **23** | **1** | **0** | **0** |
 
 Evidence is available in the generated XML/text reports under `target/surefire-reports/`. The local Maven runtime used Java 25.0.4.1 and compiled with release 17; the installed Chrome version was 157.0.8103.78 on Windows. The earlier seven-test version also completed successfully in [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619) on **17 November 2026**, for commit `ede1771`. The job finished in **29 seconds**; both the test and report-upload steps succeeded. The push workflow for the eleven-test version also succeeded on **17 November 2026**, for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks). The user-provided GitHub Actions summary shows a successful `test` job with a duration of **56 seconds**. This is workflow-level evidence; the summary records success for that earlier eleven-test version.
 
@@ -64,6 +66,14 @@ The seventeen-test version passed locally in headless Chrome on **17 November 20
 
 The twenty-two-test version passed locally in headless Chrome on **17 November 2026**. Its push workflow also succeeded in [GitHub Actions run #27](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44152861509) for commit `d926e2b`. The user-provided Maven summary reports **22 tests, 0 failures, 0 errors, and 0 skipped tests**. The workflow screenshot shows Success, **1 minute 25 seconds** total duration, a **1 minute 21 seconds** `test` job, and one artifact. The suite includes eight negative cases: four login, one post-logout access, and three checkout required-field cases.
 
+The current 23-execution version is verified locally; its first CI run is pending the error-user branch push.
+
+## Known failing test
+
+The full `mvn test` run includes `ErrorUserSortingTest` and currently returns a nonzero exit code. The application displays a Backtrace alert, reverts the selected sorting option to A–Z, and leaves the prices unsorted for `error_user`. The test still requires correct sorting; accepting the alert only allows inspection of the resulting state. It is not skipped or inverted to make the suite green. See [BUG-SORT-001](BUG_REPORTS.md#bug-sort-001--price-low-to-high-sorting-fails-for-error_user) for reproduction steps and evidence.
+
+The twenty-three-execution version has been verified locally. Its first GitHub Actions run is pending; the unchanged workflow will report a failing test while this application defect persists. Earlier green CI results above belong to earlier suite versions.
+
 ## Local setup
 
 Requirements: JDK 17 or newer and Google Chrome. Use IntelliJ IDEA's Maven integration or an installed Maven command-line distribution.
@@ -71,7 +81,7 @@ Requirements: JDK 17 or newer and Google Chrome. Use IntelliJ IDEA's Maven integ
 1. Open `pom.xml` as a Maven project in IntelliJ IDEA.
 2. Select JDK 17 or newer and reload the Maven dependencies.
 3. Copy `.env.example` to `.env` in the repository root, unless a local `.env` already exists.
-4. Fill in `TEST_PASSWORD` using the password shown on the SauceDemo login page. Set `STANDARD_USERNAME=standard_user` and `LOCKED_USERNAME=locked_out_user`; both accounts use the same demo password.
+4. Fill in `TEST_PASSWORD` using the password shown on the SauceDemo login page. Set `STANDARD_USERNAME=standard_user`, `LOCKED_USERNAME=locked_out_user`, and `ERROR_USERNAME=error_user`; all three accounts use the same demo password.
 
 Configuration keys:
 
@@ -79,6 +89,7 @@ Configuration keys:
 BASE_URL=https://www.saucedemo.com
 STANDARD_USERNAME=standard_user
 LOCKED_USERNAME=locked_out_user
+ERROR_USERNAME=error_user
 TEST_PASSWORD=
 ```
 
@@ -86,7 +97,7 @@ The example intentionally leaves the password empty. Fill it in only in your loc
 
 ## Run the test locally
 
-In IntelliJ, run `LoginTest` for the five login cases, `LogoutTest` for the two logout cases, `ProductSortingTest` for the four sorting cases, `ProductDetailsTest` for the two product-detail cases, `CartTest` for the four cart cases, or `CheckoutTest` for the five checkout cases. Use the Maven `test` phase to execute the complete twenty-two-test suite. The working directory must be the repository root so the `.env` file can be found.
+In IntelliJ, run `LoginTest` for the five login cases, `LogoutTest` for the two logout cases, `ProductSortingTest` for the four sorting cases, `ProductDetailsTest` for the two product-detail cases, `CartTest` for the four cart cases, `CheckoutTest` for the five checkout cases, or `ErrorUserSortingTest` for the account-specific sorting failure. Use the Maven `test` phase to execute the complete twenty-three-execution suite, including the known failing error-user sorting test. The working directory must be the repository root so the `.env` file can be found.
 
 Alternatively, run the Maven `test` lifecycle phase from IntelliJ's Maven tool window. If Maven is installed on your command line, run this from the repository root:
 
@@ -126,7 +137,7 @@ Before running the workflow in a repository, configure its password:
 3. Set the name to **`TEST_PASSWORD`** and the value to the SauceDemo login password.
 4. Select **Add secret**.
 
-The workflow supplies the secret as the `TEST_PASSWORD` environment variable for the **Run tests** step. `dotenv-java` reads the process environment value in preference to the empty password in the copied `.env` template. The application URL and both account names come from `.env.example`. The secret name remains `TEST_PASSWORD` for the shared demo password.
+The workflow supplies the secret as the `TEST_PASSWORD` environment variable for the **Run tests** step. `dotenv-java` reads the process environment value in preference to the empty password in the copied `.env` template. The application URL and all three account names come from `.env.example`. The secret name remains `TEST_PASSWORD` for the shared demo password.
 
 ### Read and download results
 
@@ -164,6 +175,7 @@ src/test/java/com/codecool/webshop/
         ProductDetailsTest.java Image/name navigation and cross-page consistency assertions
         CartTest.java          List/detail/cart actions and content consistency
         CheckoutTest.java      Order completion, required fields, and cancellation
+        ErrorUserSortingTest.java Targeted sorting regression exposing BUG-SORT-001
 .env.example                   Configuration template without a password
 pom.xml                        Dependencies and Maven plugins
 ```
@@ -172,6 +184,6 @@ Page objects contain browser interactions; tests contain JUnit assertions. Expli
 
 ## Next steps
 
-1. Commit and push the CI-result documentation, then complete the checkout pull request and verify its latest checks before merging.
-2. Implement the planned `error_user` sorting execution and create reproducible defect tickets for the observed failures.
+1. Review the error-user test and BUG-SORT-001, then stage, commit, and push its branch. Its full-suite CI is expected to fail while the application defect persists.
+2. Publish the prepared sorting defect report as an issue and create reports for the other reproducible exploratory failures.
 3. Execute the expanded suite and write the release status report.
