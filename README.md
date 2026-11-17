@@ -54,7 +54,7 @@ Evidence is available in the generated XML/text reports under `target/surefire-r
 
 The thirteen-test version passed locally. On **17 November 2026**, the tester also reported that all tests passed in GitHub Actions for the product-details version, commit [`7085166`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/7085166d30cf0f056faf8a58455e6c51ad1773ef/checks). Local counts were verified from Surefire reports; the CI result is based on the tester's confirmation.
 
-The new seventeen-test version passed locally in headless Chrome on **17 November 2026**. Its first GitHub Actions run is pending the cart branch push.
+The seventeen-test version passed locally in headless Chrome on **17 November 2026**. Its push workflow also succeeded in [GitHub Actions run #23](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44149916341) for commit `69373de`. The `test` job completed in **1 minute 5 seconds**, as verified directly in GitHub. This records workflow-level CI success; the local per-class results are listed separately above.
 
 ## Local setup
 
@@ -160,6 +160,6 @@ Page objects contain browser interactions; tests contain JUnit assertions. Expli
 
 ## Next steps
 
-1. Review the cart implementation, then stage, commit, and push its branch. Verify CI and open its pull request.
+1. Commit and push the CI-result documentation, then open the cart pull request and verify its latest checks before merging.
 2. Implement the five checkout cases and the planned `error_user` sorting execution, and create reproducible defect tickets.
 3. Execute the expanded suite and write the release status report.
