@@ -25,7 +25,7 @@ The login suite uses `standard_user` for successful login and invalid/missing-cr
 
 The initial GitHub Actions run on **17 November 2026** completed successfully: **1 test, 0 failures, 0 errors, and 0 skipped tests**. The Surefire results were uploaded and downloaded as the `test-results` artifact.
 
-The tester reported that all five login cases passed locally on **17 November 2026**. GitHub Actions verification of the expanded five-test suite is pending. The remaining **17 logical cases** are planned, not implemented. No release recommendation has been made.
+The tester reported that all five login cases passed locally on **17 November 2026**. The workflow for the expanded login suite then completed successfully in **GitHub Actions run #5**, using commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The test and report-upload steps both succeeded. The remaining **17 logical cases** are planned, not implemented. No release recommendation has been made.
 
 ## Local setup
 
@@ -125,7 +125,7 @@ Page objects contain browser interactions; tests contain JUnit assertions. Expli
 
 ## Next steps
 
-1. Verify all five login cases in GitHub Actions and retain the generated reports.
+1. Review and merge the login-test pull request after its checks pass.
 2. Implement logout and post-logout access checks.
 3. Implement the other selected cases and create reproducible defect tickets.
 4. Execute the expanded suite and write the release status report.

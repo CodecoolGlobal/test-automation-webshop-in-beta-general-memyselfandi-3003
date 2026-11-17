@@ -1,6 +1,6 @@
 # SauceDemo — Test Cases
 
-This is the initial test specification for [SauceDemo](https://www.saucedemo.com/), based on manual exploration. It contains **22 logical test cases** across the six required user stories, with **1–5 cases per story**. **TC-LOGIN-01 through TC-LOGIN-05 are implemented and were reported as passing in a local automated run on 17 November 2026.** The remaining 17 logical cases are planned and not implemented. Verification of the expanded five-test suite in GitHub Actions is pending. Initial exploratory observations are kept separate from automated execution results.
+This is the initial test specification for [SauceDemo](https://www.saucedemo.com/), based on manual exploration. It contains **22 logical test cases** across the six required user stories, with **1–5 cases per story**. **TC-LOGIN-01 through TC-LOGIN-05 are implemented and were reported as passing in a local automated run on 17 November 2026.** The remaining 17 logical cases are planned and not implemented. The expanded login-suite workflow succeeded in **GitHub Actions run #5** for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). Initial exploratory observations are kept separate from automated execution results.
 
 ## Scope and accounts
 
@@ -42,7 +42,7 @@ This selection provides a manageable starting scope. It does not establish that 
 | TC-LOGIN-04 | Missing password — Negative | Enter `standard_user`. Leave Password empty. Select Login. | Authentication is rejected and a visible message identifies the missing password. |
 | TC-LOGIN-05 | Locked account — Negative | Enter `locked_out_user` and its valid password. Select Login. | Authentication is rejected and a visible message identifies the account restriction. The product list does not appear. |
 
-**Automation status:** all five cases are implemented in `LoginTest`. Negative cases wait for the visible login error, assert its exact text, and check that the login URL is unchanged. TC-LOGIN-05 expects: `Epic sadface: Sorry, this user has been locked out.` The tester reported that all five cases passed locally; expanded CI verification is pending.
+**Automation status:** all five cases are implemented in `LoginTest`. Negative cases wait for the visible login error, assert its exact text, and check that the login URL is unchanged. TC-LOGIN-05 expects: `Epic sadface: Sorry, this user has been locked out.` The tester reported that all five cases passed locally. The expanded login-suite workflow also succeeded in GitHub Actions run #5, including its test and report-upload steps.
 
 ## US-02 — Log out
 
@@ -140,7 +140,7 @@ Keep these findings in defect tracking or exploratory notes. Expand automation a
 
 ## Execution results and issue links
 
-**Local verification, 17 November 2026:** the tester reported that all five automated login cases passed when running the `LoginTest` class. These entries record that local report; they are not results from the expanded CI run. The initial single-test CI verification is recorded in the README.
+**Local verification, 17 November 2026:** the tester reported that all five automated login cases passed when running the `LoginTest` class. The table below records that local report. The subsequent CI workflow result is documented separately below; individual CI results can be inspected in the Surefire artifact. The initial single-test CI verification is recorded in the README.
 
 | Case ID | Account / input | Local result | Evidence | Issue |
 | --- | --- | --- | --- | --- |
@@ -150,7 +150,7 @@ Keep these findings in defect tracking or exploratory notes. Expand automation a
 | TC-LOGIN-04 | `standard_user`, empty password | Pass | Tester-reported local JUnit run | — |
 | TC-LOGIN-05 | `locked_out_user`, valid password | Pass | Tester-reported local JUnit run | — |
 
-The expanded CI run is **pending**. Attach or link its Surefire reports once available. Browser and OS versions for the tester's local run have not been recorded here.
+**CI verification, 17 November 2026:** GitHub Actions run **#5**, for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks), completed successfully. The workflow's **Run tests** and **Upload test results** steps both succeeded. The `test-results` artifact contains the Surefire reports for the detailed per-case CI results. Browser and OS versions for the tester's local run have not been recorded here.
 
 The remaining 17 logical cases, including the planned `error_user` sorting variant, are **Not Run** and not implemented. Record each later account-specific execution separately with the result, actual behavior, evidence, and related issue where applicable.
 
@@ -160,7 +160,7 @@ Allowed results: **Not Run**, **Pass**, **Fail**, and **Blocked**. Record a bloc
 
 1. **Completed:** initialize the Java/Maven project with Selenium, JUnit, separate page objects, and isolated browser sessions.
 2. **Completed:** implement the five login cases and obtain a tester-reported successful local run.
-3. **Next:** verify the expanded five-test suite in GitHub Actions and retain its results. The initial single-case CI run has already passed.
+3. **Completed:** verify the expanded login-suite workflow in GitHub Actions run #5; the test and Surefire report-upload steps succeeded.
 4. **Planned:** add the remaining core cases, then the `error_user` sorting variant.
 5. **Planned:** review failures, file reproducible issues, and write the release report with the actual tested account scope.
 
