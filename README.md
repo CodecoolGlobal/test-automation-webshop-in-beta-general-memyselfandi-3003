@@ -47,7 +47,7 @@ The tester reported that all five login cases passed locally on **17 November 20
 
 Evidence is available in the generated XML/text reports under `target/surefire-reports/`. The local Maven runtime used Java 25.0.4.1 and compiled with release 17; the installed Chrome version was 157.0.8103.78 on Windows. The earlier seven-test version also completed successfully in [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619) on **17 November 2026**, for commit `ede1771`. The job finished in **29 seconds**; both the test and report-upload steps succeeded. The push workflow for the eleven-test version also succeeded on **17 November 2026**, for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks). The user-provided GitHub Actions summary shows a successful `test` job with a duration of **56 seconds**. This is workflow-level evidence; the summary records success for that earlier eleven-test version.
 
-The new thirteen-test version passed locally; its first GitHub Actions run is pending the product-details branch push.
+The thirteen-test version passed locally. On **17 November 2026**, the tester also reported that all tests passed in GitHub Actions for the product-details version, commit [`7085166`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/7085166d30cf0f056faf8a58455e6c51ad1773ef/checks). Local counts were verified from Surefire reports; the CI result is based on the tester's confirmation.
 
 ## Local setup
 
@@ -151,6 +151,6 @@ Page objects contain browser interactions; tests contain JUnit assertions. Expli
 
 ## Next steps
 
-1. Review the product-detail implementation, then stage, commit, and push its branch. Verify CI and open its pull request.
+1. Commit and push the CI-result documentation, then finish the product-details pull request and verify its latest checks before merging.
 2. Implement the other selected cases, including the planned `error_user` sorting execution, and create reproducible defect tickets.
 3. Execute the expanded suite and write the release status report.

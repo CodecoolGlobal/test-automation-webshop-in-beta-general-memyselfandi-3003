@@ -175,7 +175,7 @@ Local verification details:
 
 **Eleven-test push CI verification, 17 November 2026:** The push workflow for the eleven-test version also succeeded on **17 November 2026**, for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks). The user-provided GitHub Actions summary shows a successful `test` job with a duration of **56 seconds**. This is workflow-level evidence; the summary records success for that earlier eleven-test version.
 
-**Current thirteen-test version:** verified locally on 17 November 2026. Its first GitHub Actions run is pending the product-details branch push.
+**Current thirteen-test version:** The thirteen-test version passed locally. On **17 November 2026**, the tester also reported that all tests passed in GitHub Actions for the product-details version, commit [`7085166`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/7085166d30cf0f056faf8a58455e6c51ad1773ef/checks). Local counts were verified from Surefire reports; the CI result is based on the tester's confirmation.
 
 The remaining 9 logical cases and the additional `error_user` execution of TC-SORT-03 are **Not Run** and not implemented. Record each later account-specific execution separately with its result, actual behavior, evidence, and related issue where applicable.
 
@@ -188,7 +188,7 @@ Allowed results: **Not Run**, **Pass**, **Fail**, and **Blocked**. Record a bloc
 3. **Completed locally:** implement two logout cases and verify the complete seven-test suite in a headless Maven run.
 4. **Completed:** verify the seven-test workflow in GitHub Actions run #9; test execution and report upload succeeded. The logout pull request was merged into `main` before starting the sorting branch.
 5. **Completed:** implement four standard-user sorting cases, verify the complete eleven-test suite locally, and verify the successful push workflow (56-second `test` job). The sorting pull request was merged into `main` before starting the product-details branch.
-6. **Completed locally:** implement both product-detail navigation cases and verify the complete thirteen-test suite. Code review, push, CI, and the product-details pull request remain pending.
+6. **Completed:** implement and review both product-detail navigation cases, verify all thirteen tests locally, and record the tester-reported successful GitHub Actions run. Finish the product-details pull request and verify its latest checks before merging.
 7. **Planned:** add the cart and checkout cases, then the `error_user` sorting variant.
 8. **Planned:** review failures, file reproducible issues, and write the release report with the actual tested account scope.
 
