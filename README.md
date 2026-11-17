@@ -42,7 +42,7 @@ The tester reported that all five login cases passed locally on **17 November 20
 | `ProductSortingTest` | 4 | 0 | 0 | 0 |
 | **Total** | **11** | **0** | **0** | **0** |
 
-Evidence is available in the generated XML/text reports under `target/surefire-reports/`. The local Maven runtime used Java 25.0.4.1 and compiled with release 17; the installed Chrome version was 157.0.8103.78 on Windows. The earlier seven-test version also completed successfully in [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619) on **17 November 2026**, for commit `ede1771`. The job finished in **29 seconds**; both the test and report-upload steps succeeded. CI verification of the new eleven-test version is pending its first push.
+Evidence is available in the generated XML/text reports under `target/surefire-reports/`. The local Maven runtime used Java 25.0.4.1 and compiled with release 17; the installed Chrome version was 157.0.8103.78 on Windows. The earlier seven-test version also completed successfully in [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619) on **17 November 2026**, for commit `ede1771`. The job finished in **29 seconds**; both the test and report-upload steps succeeded. The push workflow for the eleven-test version also succeeded on **17 November 2026**, for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks). The user-provided GitHub Actions summary shows a successful `test` job with a duration of **56 seconds**. This is workflow-level evidence; the exact eleven-test counts above were verified locally from Surefire reports.
 
 ## Local setup
 
@@ -144,6 +144,6 @@ Page objects contain browser interactions; tests contain JUnit assertions. Expli
 
 ## Next steps
 
-1. Review the sorting implementation, then stage, commit, and push it. Check CI and open its pull request.
+1. Commit and push the CI-result documentation, then open the sorting pull request and check its PR workflow before merging.
 2. Implement the other selected cases, including the planned `error_user` sorting execution, and create reproducible defect tickets.
 3. Execute the expanded suite and write the release status report.
