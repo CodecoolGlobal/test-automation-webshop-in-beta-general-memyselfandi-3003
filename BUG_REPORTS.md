@@ -4,7 +4,7 @@ These reports are prepared locally for issue tracking. A local report ID does no
 
 ## BUG-SORT-001 — Price low-to-high sorting fails for error_user
 
-**Status:** confirmed locally on 17 November 2026; GitHub issue not created yet.
+**Status:** confirmed locally and in GitHub Actions run #32 on 17 November 2026; GitHub issue not created yet.
 
 **Related test:** TC-SORT-03, `error_user` variant, implemented in `ErrorUserSortingTest.sortErrorUserPricesAscending`.
 
@@ -62,7 +62,9 @@ mvn -Dtest=ErrorUserSortingTest test
 
 The full local suite completed with **23 tests, 1 failure, 0 errors, and 0 skipped tests**; 22 executions passed. Maven returned a nonzero exit code because this functional requirement failed.
 
-Generated evidence, excluded from Git:
+On **17 November 2026**, [GitHub Actions run #32](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44163805385/job/134324359434), for commit `44483ef`, confirmed **23 tests, 1 failure, 0 errors, and 0 skipped tests**. The other 22 executions passed. The sole failing case is `ErrorUserSortingTest.sortErrorUserPricesAscending`, exposing BUG-SORT-001. The `test` job failed in **57 seconds** and Maven returned exit code 1. These counts and the failing case were verified directly in the GitHub job log.
+
+Generated local evidence, excluded from Git:
 
 - `target/surefire-reports/TEST-com.codecool.webshop.tests.ErrorUserSortingTest.xml`
 - `target/surefire-reports/com.codecool.webshop.tests.ErrorUserSortingTest.txt`

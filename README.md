@@ -66,13 +66,13 @@ The seventeen-test version passed locally in headless Chrome on **17 November 20
 
 The twenty-two-test version passed locally in headless Chrome on **17 November 2026**. Its push workflow also succeeded in [GitHub Actions run #27](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44152861509) for commit `d926e2b`. The user-provided Maven summary reports **22 tests, 0 failures, 0 errors, and 0 skipped tests**. The workflow screenshot shows Success, **1 minute 25 seconds** total duration, a **1 minute 21 seconds** `test` job, and one artifact. The suite includes eight negative cases: four login, one post-logout access, and three checkout required-field cases.
 
-The current 23-execution version is verified locally; its first CI run is pending the error-user branch push.
+On **17 November 2026**, [GitHub Actions run #32](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44163805385/job/134324359434), for commit `44483ef`, confirmed **23 tests, 1 failure, 0 errors, and 0 skipped tests**. The other 22 executions passed. The sole failing case is `ErrorUserSortingTest.sortErrorUserPricesAscending`, exposing BUG-SORT-001. The `test` job failed in **57 seconds** and Maven returned exit code 1. These counts and the failing case were verified directly in the GitHub job log.
 
 ## Known failing test
 
 The full `mvn test` run includes `ErrorUserSortingTest` and currently returns a nonzero exit code. The application displays a Backtrace alert, reverts the selected sorting option to A–Z, and leaves the prices unsorted for `error_user`. The test still requires correct sorting; accepting the alert only allows inspection of the resulting state. It is not skipped or inverted to make the suite green. See [BUG-SORT-001](BUG_REPORTS.md#bug-sort-001--price-low-to-high-sorting-fails-for-error_user) for reproduction steps and evidence.
 
-The twenty-three-execution version has been verified locally. Its first GitHub Actions run is pending; the unchanged workflow will report a failing test while this application defect persists. Earlier green CI results above belong to earlier suite versions.
+The twenty-three-execution version has been verified locally and in GitHub Actions. The full workflow remains failing while this application defect persists. Earlier green CI results above belong to earlier suite versions.
 
 ## Local setup
 
@@ -184,6 +184,6 @@ Page objects contain browser interactions; tests contain JUnit assertions. Expli
 
 ## Next steps
 
-1. Review the error-user test and BUG-SORT-001, then stage, commit, and push its branch. Its full-suite CI is expected to fail while the application defect persists.
+1. Commit and push the CI-result documentation, then review the error-user pull request with its documented failing case and BUG-SORT-001.
 2. Publish the prepared sorting defect report as an issue and create reports for the other reproducible exploratory failures.
 3. Execute the expanded suite and write the release status report.
