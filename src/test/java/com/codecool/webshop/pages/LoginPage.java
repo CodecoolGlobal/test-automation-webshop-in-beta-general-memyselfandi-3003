@@ -39,4 +39,19 @@ public class LoginPage extends BasePage {
     public String getLoginErrorText() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(loginErrorMessage)).getText();
     }
+
+    public void waitUntilLoaded() {
+        wait.until(ExpectedConditions.urlToBe(baseUrl + "/"));
+        waitUntilFormVisible();
+    }
+
+    public void waitUntilFormVisible() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(usernameInput));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(passwordInput));
+        wait.until(ExpectedConditions.elementToBeClickable(loginButton));
+    }
+
+    public boolean isLoginButtonDisplayed() {
+        return driver.findElement(loginButton).isDisplayed();
+    }
 }
