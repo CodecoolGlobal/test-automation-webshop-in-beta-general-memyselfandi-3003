@@ -73,6 +73,22 @@ public class ProductsPage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(nameLink)).click();
     }
 
+    public void addProductToCart(String productName) {
+        WebElement addButton = getProductCard(productName)
+                .findElement(By.cssSelector("button[id^='add-to-cart-']"));
+        wait.until(ExpectedConditions.elementToBeClickable(addButton)).click();
+    }
+
+    public void removeProductFromCart(String productName) {
+        WebElement removeButton = getProductCard(productName)
+                .findElement(By.cssSelector("button[id^='remove-']"));
+        wait.until(ExpectedConditions.elementToBeClickable(removeButton)).click();
+    }
+
+    public String getCartButtonText(String productName) {
+        return getProductCard(productName).findElement(By.tagName("button")).getText();
+    }
+
     private WebElement getProductCard(String productName) {
         List<WebElement> cards = wait.until(
                 ExpectedConditions.visibilityOfAllElementsLocatedBy(products));
