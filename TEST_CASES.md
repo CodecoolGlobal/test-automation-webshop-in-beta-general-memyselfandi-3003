@@ -1,6 +1,6 @@
 # SauceDemo — Test Cases
 
-This is the initial test specification for [SauceDemo](https://www.saucedemo.com/), based on manual exploration. It contains **22 logical test cases** across the six required user stories, with **1–5 cases per story**. **TC-LOGIN-01 through TC-LOGIN-05, TC-LOGOUT-01 through TC-LOGOUT-02, the four standard-user sorting cases, TC-PRODUCT-01 through TC-PRODUCT-02, and TC-CART-01 through TC-CART-04 are implemented. A combined local headless Maven run on 17 November 2026 passed all seventeen executions with no failures, errors, or skipped tests.** The remaining 5 logical cases and the additional `error_user` execution of TC-SORT-03 are planned and not implemented. The earlier five-login-test workflow succeeded in **GitHub Actions run #5** for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The earlier seven-test workflow succeeded in [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619) for commit `ede1771`. The push workflow for the eleven-test version succeeded for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks); its `test` job took 56 seconds, as shown in the user-provided workflow summary. Initial exploratory observations are kept separate from automated execution results.
+This is the initial test specification for [SauceDemo](https://www.saucedemo.com/), based on manual exploration. It contains **22 logical test cases** across the six required user stories, with **1–5 cases per story**. **TC-LOGIN-01 through TC-LOGIN-05, TC-LOGOUT-01 through TC-LOGOUT-02, the four standard-user sorting cases, TC-PRODUCT-01 through TC-PRODUCT-02, TC-CART-01 through TC-CART-04, and TC-CHECKOUT-01 through TC-CHECKOUT-05 are implemented. A combined local headless Maven run on 17 November 2026 passed all twenty-two baseline executions with no failures, errors, or skipped tests.** All 22 logical cases have a baseline implementation. The additional `error_user` execution of TC-SORT-03 is planned and not implemented. The earlier five-login-test workflow succeeded in **GitHub Actions run #5** for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The earlier seven-test workflow succeeded in [GitHub Actions run #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44131621619) for commit `ede1771`. The push workflow for the eleven-test version succeeded for commit [`60e6af9`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/60e6af935c73a21b4cc60d0aba6c2fa64983411d/checks); its `test` job took 56 seconds, as shown in the user-provided workflow summary. Initial exploratory observations are kept separate from automated execution results.
 
 ## Scope and accounts
 
@@ -110,6 +110,8 @@ For each sorting case, capture the product identities before sorting and verify 
 | TC-CHECKOUT-04 | Missing Postal Code — Negative | Fill First Name and Last Name; leave Postal Code empty. Select Continue. | A visible message identifies the required Postal Code. Checkout does not advance to the overview and no order is completed. |
 | TC-CHECKOUT-05 | Cancel before completion — Alternative flow | From the customer-information step, select Cancel. Inspect the returned cart. | The cart page appears with both selected products and consistent prices and count. No order-completion confirmation appears. |
 
+**Automation status:** all five cases are implemented in `CheckoutTest` for `standard_user`. Each fresh session adds Backpack and Bike Light, retains list prices and cart quantities, verifies the starting cart, and opens customer information. TC-CHECKOUT-01 checks exact product membership, prices, quantities, the sum of line totals, and subtotal plus displayed tax before selecting Finish. It then verifies the completion URL and explicit confirmation text. Monetary sums use a tolerance of 0.001 USD to allow `double` rounding while detecting a one-cent discrepancy. Missing-field cases assert the exact required-field message, the unchanged customer-information URL, a visible Continue button, and no visible completion confirmation. Cancel returns to the same cart with both product prices, quantities, and badge count preserved. All five cases passed in the combined twenty-two-test local headless run. These are UI checks; no backend order records are inspected.
+
 **Assertion limit:** checking arithmetic with the displayed tax does not verify the correctness of the tax policy. A tax-rate expectation requires a separate business rule. No special postal-code format is assumed by this plan.
 
 ## Planned coverage summary
@@ -142,7 +144,7 @@ Keep these findings in defect tracking or exploratory notes. Expand automation a
 
 ## Execution results and issue links
 
-**Local headless Maven run, 17 November 2026:** the complete suite passed with **17 tests, 0 failures, 0 errors, and 0 skipped tests**. This result was verified from the generated Surefire reports, rather than inferred from exploratory notes.
+**Local headless Maven run, 17 November 2026:** the complete suite passed with **22 tests, 0 failures, 0 errors, and 0 skipped tests**. This result was verified from the generated Surefire reports, rather than inferred from exploratory notes.
 
 | Case ID | Account / input | Local result | Evidence | Issue |
 | --- | --- | --- | --- | --- |
@@ -164,6 +166,11 @@ Keep these findings in defect tracking or exploratory notes. Expand automation a
 | TC-CART-02 | `standard_user`, add/remove from details | Pass | Local Maven / Surefire | — |
 | TC-CART-03 | `standard_user`, remove from cart | Pass | Local Maven / Surefire | — |
 | TC-CART-04 | `standard_user`, two distinct products | Pass | Local Maven / Surefire | — |
+| TC-CHECKOUT-01 | `standard_user`, complete order | Pass | Local Maven / Surefire | — |
+| TC-CHECKOUT-02 | `standard_user`, missing First Name | Pass | Local Maven / Surefire | — |
+| TC-CHECKOUT-03 | `standard_user`, missing Last Name | Pass | Local Maven / Surefire | — |
+| TC-CHECKOUT-04 | `standard_user`, missing Postal Code | Pass | Local Maven / Surefire | — |
+| TC-CHECKOUT-05 | `standard_user`, cancel checkout | Pass | Local Maven / Surefire | — |
 
 Local verification details:
 
@@ -171,7 +178,7 @@ Local verification details:
 - Java runtime: 25.0.4.1; compiler release: 17.
 - Operating system: Windows.
 - Installed Chrome: 157.0.8103.78.
-- Reports: `target/surefire-reports/TEST-com.codecool.webshop.tests.LoginTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.LogoutTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.ProductSortingTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.ProductDetailsTest.xml`, and `target/surefire-reports/TEST-com.codecool.webshop.tests.CartTest.xml`, with their corresponding `.txt` summaries.
+- Reports: `target/surefire-reports/TEST-com.codecool.webshop.tests.LoginTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.LogoutTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.ProductSortingTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.ProductDetailsTest.xml`, `target/surefire-reports/TEST-com.codecool.webshop.tests.CartTest.xml`, and `target/surefire-reports/TEST-com.codecool.webshop.tests.CheckoutTest.xml`, with their corresponding `.txt` summaries.
 
 **Earlier CI evidence:** GitHub Actions run **#5**, for commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks), completed successfully with the five-login-test version. Its test and report-upload steps succeeded.
 
@@ -181,9 +188,11 @@ Local verification details:
 
 **Earlier thirteen-test version:** The thirteen-test version passed locally. On **17 November 2026**, the tester also reported that all tests passed in GitHub Actions for the product-details version, commit [`7085166`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/7085166d30cf0f056faf8a58455e6c51ad1773ef/checks). Local counts were verified from Surefire reports; the CI result is based on the tester's confirmation.
 
-**Current seventeen-test version:** The seventeen-test version passed locally in headless Chrome on **17 November 2026**. Its push workflow also succeeded in [GitHub Actions run #23](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44149916341) for commit `69373de`. The `test` job completed in **1 minute 5 seconds**, as verified directly in GitHub. This records workflow-level CI success; the local per-class results are listed separately above.
+**Earlier seventeen-test version:** The seventeen-test version passed locally in headless Chrome on **17 November 2026**. Its push workflow also succeeded in [GitHub Actions run #23](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44149916341) for commit `69373de`. The `test` job completed in **1 minute 5 seconds**, as verified directly in GitHub. This records workflow-level CI success; the local per-class results are listed separately above.
 
-The remaining 5 logical cases and the additional `error_user` execution of TC-SORT-03 are **Not Run** and not implemented. Record each later account-specific execution separately with its result, actual behavior, evidence, and related issue where applicable.
+**Current twenty-two-test version:** The twenty-two-test version passed locally in headless Chrome on **17 November 2026**. Its push workflow also succeeded in [GitHub Actions run #27](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44152861509) for commit `d926e2b`. The user-provided Maven summary reports **22 tests, 0 failures, 0 errors, and 0 skipped tests**. The workflow screenshot shows Success, **1 minute 25 seconds** total duration, a **1 minute 21 seconds** `test` job, and one artifact.
+
+The additional `error_user` execution of TC-SORT-03 is **Not Run** and not implemented. All 22 logical cases have baseline automated coverage; this does not establish release readiness for the other accounts or resolve exploratory defects. Record each later account-specific execution separately with its result, actual behavior, evidence, and related issue where applicable.
 
 Allowed results: **Not Run**, **Pass**, **Fail**, and **Blocked**. Record a blocker and its issue when applicable. Never mark an unexecuted case as passed based on another account's result.
 
@@ -195,8 +204,9 @@ Allowed results: **Not Run**, **Pass**, **Fail**, and **Blocked**. Record a bloc
 4. **Completed:** verify the seven-test workflow in GitHub Actions run #9; test execution and report upload succeeded. The logout pull request was merged into `main` before starting the sorting branch.
 5. **Completed:** implement four standard-user sorting cases, verify the complete eleven-test suite locally, and verify the successful push workflow (56-second `test` job). The sorting pull request was merged into `main` before starting the product-details branch.
 6. **Completed:** implement and review both product-detail navigation cases, verify all thirteen tests locally, and record the tester-reported successful GitHub Actions run. The product-details pull request was merged into `main` before starting the cart branch.
-7. **Completed:** implement and review the four cart cases, verify all seventeen tests locally, and verify the successful push workflow in GitHub Actions run #23 (1 minute 5 seconds). The cart pull request and its latest checks remain to be completed before merging.
-8. **Planned:** add the five checkout cases, then the `error_user` sorting variant.
-9. **Planned:** review failures, file reproducible issues, and write the release report with the actual tested account scope.
+7. **Completed:** implement and review the four cart cases, verify all seventeen tests locally, and verify the successful push workflow in GitHub Actions run #23 (1 minute 5 seconds). The cart pull request was merged into `main` before starting the checkout branch.
+8. **Completed:** implement the five checkout cases, verify all twenty-two tests locally, and record successful GitHub Actions run #27 with 22 tests, 0 failures, 0 errors, and 0 skipped tests. Complete the checkout pull request and verify its latest checks before merging.
+9. **Planned:** implement and execute the `error_user` sorting variant.
+10. **Planned:** review failures, file reproducible issues, and write the release report with the actual tested account scope.
 
 Selenium Grid can be added as a separate infrastructure extension. It is not required to begin implementing these cases.
