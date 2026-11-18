@@ -1,0 +1,23 @@
+Full local JUnit suite - 18 November 2026
+Application: https://www.saucedemo.com/
+Test-code revision: 69a1fe3; feature/defect-reports changes documentation only.
+Environment: Windows; Chrome 158.0.8127.36 headless; Java 25.0.4.1, compilation release 17; Maven 3.9.16.
+Command: CI=true mvn --batch-mode test (local Maven/cache paths omitted).
+Finished: 2026-11-18 09:42:46 CET; Maven total time: 58.585 s; exit code: 1.
+
+com.codecool.webshop.tests.CartTest: tests=4, failures=0, errors=0, skipped=0, time=11.532s
+com.codecool.webshop.tests.CheckoutTest: tests=5, failures=0, errors=0, skipped=0, time=15.922s
+com.codecool.webshop.tests.ErrorUserSortingTest: tests=1, failures=1, errors=0, skipped=0, time=2.48s
+com.codecool.webshop.tests.LoginTest: tests=5, failures=0, errors=0, skipped=0, time=7.056s
+com.codecool.webshop.tests.LogoutTest: tests=2, failures=0, errors=0, skipped=0, time=5.299s
+com.codecool.webshop.tests.ProductDetailsTest: tests=2, failures=0, errors=0, skipped=0, time=4.534s
+com.codecool.webshop.tests.ProductSortingTest: tests=4, failures=0, errors=0, skipped=0, time=8.93s
+
+TOTAL: tests=23, passed=22, failures=1, errors=0, skipped=0.
+Failure: ErrorUserSortingTest.sortErrorUserPricesAscending; BUG-SORT-001; GitHub issue #8.
+Three failed assertions in one test: error alert; selection reverts to Name (A to Z); displayed prices remain unsorted.
+Expected prices: [7.99, 9.99, 15.99, 15.99, 29.99, 49.99]
+Actual prices: [29.99, 9.99, 15.99, 49.99, 7.99, 15.99]
+Observed alert: Sorting is broken! This error has been reported to Backtrace.
+CDP version warning: Chrome 158, closest supported CDP 156; WebDriver executions completed with no errors.
+Original evidence: generated target/surefire-reports/TEST-*.xml and class text reports (ignored by Git).

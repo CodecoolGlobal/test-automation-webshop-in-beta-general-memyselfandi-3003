@@ -1,74 +1,25 @@
 # SauceDemo defect reports
 
-Reports include reproducible steps and evidence. Published reports link to their GitHub issues; the local BUG identifier remains stable.
+This register indexes all **15 confirmed defects**. Each detailed report is stored separately in [docs/bugs](docs/bugs) and includes reproduction steps, expected and actual results, and evidence. Published reports link to their GitHub issues; the local BUG identifier remains stable.
 
-## BUG-SORT-001 — Price low-to-high sorting fails for error_user
+BUG-SORT-001 was verified locally and in CI on 17 November 2026 and reproduced locally on 18 November. The other fourteen reports were confirmed by targeted rechecks on 18 November. Account and surface variants of the same failure are grouped. Suggested severity is an assessment, not a configured GitHub priority.
 
-**Status:** confirmed locally and in GitHub Actions run #32 on 17 November 2026; tracked as open [GitHub issue #8](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/8).
+| Report | Confirmed accounts | Suggested severity | Tracking |
+| --- | --- | --- | --- |
+| [BUG-SORT-001](docs/bugs/BUG-SORT-001.md) | error_user | Medium | [Issue #8](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/8) |
+| [BUG-RESET-001](docs/bugs/BUG-RESET-001.md) | standard_user, problem_user, error_user, visual_user, performance_glitch_user | Low | [Issue #10](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/10) |
+| [BUG-IMAGE-001](docs/bugs/BUG-IMAGE-001.md) | problem_user, visual_user | Medium | [Issue #11](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/11) |
+| [BUG-SORT-002](docs/bugs/BUG-SORT-002.md) | problem_user | Medium | [Issue #12](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/12) |
+| [BUG-SORT-003](docs/bugs/BUG-SORT-003.md) | visual_user | Medium | [Issue #13](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/13) |
+| [BUG-PRODUCT-001](docs/bugs/BUG-PRODUCT-001.md) | problem_user | Medium | [Issue #14](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/14) |
+| [BUG-PRODUCT-002](docs/bugs/BUG-PRODUCT-002.md) | error_user | Medium | [Issue #15](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/15) |
+| [BUG-CART-001](docs/bugs/BUG-CART-001.md) | problem_user, error_user | High | [Issue #16](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/16) |
+| [BUG-CART-002](docs/bugs/BUG-CART-002.md) | problem_user, error_user | Medium | [Issue #17](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/17) |
+| [BUG-CHECKOUT-001](docs/bugs/BUG-CHECKOUT-001.md) | problem_user | High | [Issue #18](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/18) |
+| [BUG-CHECKOUT-002](docs/bugs/BUG-CHECKOUT-002.md) | error_user | Medium | [Issue #19](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/19) |
+| [BUG-CHECKOUT-003](docs/bugs/BUG-CHECKOUT-003.md) | error_user | High | [Issue #20](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/20) |
+| [BUG-NAV-001](docs/bugs/BUG-NAV-001.md) | problem_user | Low | [Issue #21](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/21) |
+| [BUG-VISUAL-001](docs/bugs/BUG-VISUAL-001.md) | visual_user | Low | [Issue #22](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/22) |
+| [BUG-VISUAL-002](docs/bugs/BUG-VISUAL-002.md) | visual_user | Low | [Issue #23](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/23) |
 
-**Related test:** TC-SORT-03, `error_user` variant, implemented in `ErrorUserSortingTest.sortErrorUserPricesAscending`.
-
-**Related pull request:** [PR #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/pull/9) adds regression coverage and documents the existing defect. The issue remains open after that PR is merged because the external webshop defect is not fixed by adding a test.
-
-**Impact:** the affected account cannot display the catalog in ascending price order. A visible error interrupts the action. The same sorting case passes for `standard_user` in the same full-suite run.
-
-### Environment
-
-- Application: https://www.saucedemo.com/
-- Account: `error_user`; use its valid password from local configuration or the application's login page.
-- Browser: Chrome 157.0.8103.78, headless.
-- OS: Windows; Java runtime 25.0.4.1, compiler release 17.
-- Automation: Selenium 4.52.0, JUnit Jupiter 6.1.3, Maven 3.9.16.
-- Reproduction evidence: one automated execution in the recorded full-suite run, consistent with the earlier exploratory observation.
-
-### Preconditions
-
-Start with a fresh browser session. Sign in successfully as `error_user` and wait for the Products page. The catalog contains six products in the initial Name (A to Z) order.
-
-### Steps to reproduce
-
-1. Open the application and sign in as `error_user` using valid credentials.
-2. On Products, select **Price (low to high)** from the sorting dropdown.
-3. Observe the alert and select OK to inspect the catalog afterwards.
-4. Read the selected sorting option and the complete displayed price sequence.
-
-### Expected result
-
-No sorting-error alert appears. The selected option remains **Price (low to high)**. The same products remain present, and the prices are in ascending numeric order:
-
-```text
-7.99, 9.99, 15.99, 15.99, 29.99, 49.99
-```
-
-### Actual result
-
-The application displays this alert:
-
-```text
-Sorting is broken! This error has been reported to Backtrace.
-```
-
-After accepting the alert, the selected option is **Name (A to Z)**. The prices remain in this unsorted sequence:
-
-```text
-29.99, 9.99, 15.99, 49.99, 7.99, 15.99
-```
-
-The original product names and their counts are preserved. The automation therefore reports three failed assertions inside one failed test: error alert, selected option, and price order. These are observations of the same sorting failure, not three separate test cases.
-
-### Evidence and execution
-
-```bash
-mvn -Dtest=ErrorUserSortingTest test
-```
-
-The full local suite completed with **23 tests, 1 failure, 0 errors, and 0 skipped tests**; 22 executions passed. Maven returned a nonzero exit code because this functional requirement failed.
-
-On **17 November 2026**, [GitHub Actions run #32](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44163805385/job/134324359434), for commit `44483ef`, confirmed **23 tests, 1 failure, 0 errors, and 0 skipped tests**. The other 22 executions passed. The sole failing case is `ErrorUserSortingTest.sortErrorUserPricesAscending`, exposing BUG-SORT-001. The `test` job failed in **57 seconds** and Maven returned exit code 1. These counts and the failing case were verified directly in the GitHub job log.
-
-Generated local evidence, excluded from Git:
-
-- `target/surefire-reports/TEST-com.codecool.webshop.tests.ErrorUserSortingTest.xml`
-- `target/surefire-reports/com.codecool.webshop.tests.ErrorUserSortingTest.txt`
-
-The test accepts the alert only so that it can inspect the resulting catalog. It still requires correct sorting without an error alert. It is not skipped, disabled, or changed to accept the defect. No changes to the application under test are part of this report.
+See the [release status report](RELEASE_STATUS.md) for the overall recommendation and the [evidence directory](docs/evidence/2026-11-18/README.md) for execution details.

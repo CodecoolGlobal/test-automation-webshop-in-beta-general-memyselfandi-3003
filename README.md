@@ -4,6 +4,12 @@ Browser tests for [SauceDemo](https://www.saucedemo.com/) using **Java 17, Maven
 
 The project follows the Page Object Model with `BaseTest` and `BasePage`. Configuration is loaded using `dotenv-java`, and GitHub Actions runs the tests in headless Chrome.
 
+## Release assessment - 18 November 2026
+
+**NO-GO for the assessed product scope.** The latest local headless run executed **23 tests: 22 passed, 1 failed, 0 errors, 0 skipped**. The known error-user sorting defect remains reproducible. Targeted account rechecks confirmed fourteen more defects; all fifteen confirmed reports have open GitHub tickets.
+
+Read the [release status report](RELEASE_STATUS.md) for the recommendation, evidence, account scope, limitations and conditions for retesting. The [defect register](BUG_REPORTS.md) links each ticket and detailed reproduction steps. The [18 November evidence](docs/evidence/2026-11-18/README.md) separates diagnostic observations from JUnit execution counts. PR #9 is merged; it adds coverage and does not fix the external application.
+
 ## Test planning
 
 - [Test cases](TEST_CASES.md): the initial positive and negative cases and selected test accounts.
@@ -14,7 +20,7 @@ The login suite uses `standard_user` for successful login and invalid/missing-cr
 
 ## Current implementation
 
-**Twenty-two logical cases have a baseline implementation:** five login cases, two logout cases, four sorting cases, two product-detail cases, four cart cases, and five checkout cases. Sorting, logout, product-detail, cart, and checkout cases use `standard_user`. The additional `error_user` execution of TC-SORT-03 is implemented, bringing the suite to **23 account-specific executions**. It fails on the confirmed application defect [BUG-SORT-001](BUG_REPORTS.md#bug-sort-001--price-low-to-high-sorting-fails-for-error_user).
+**Twenty-two logical cases have a baseline implementation:** five login cases, two logout cases, four sorting cases, two product-detail cases, four cart cases, and five checkout cases. Sorting, logout, product-detail, cart, and checkout cases use `standard_user`. The additional `error_user` execution of TC-SORT-03 is implemented, bringing the suite to **23 account-specific executions**. It fails on the confirmed application defect [BUG-SORT-001](docs/bugs/BUG-SORT-001.md).
 
 | Case | Scenario |
 | --- | --- |
@@ -43,9 +49,9 @@ The login suite uses `standard_user` for successful login and invalid/missing-cr
 
 The initial GitHub Actions run on **17 November 2026** completed successfully: **1 test, 0 failures, 0 errors, and 0 skipped tests**. The Surefire results were uploaded and downloaded as the `test-results` artifact.
 
-The tester reported that all five login cases passed locally on **17 November 2026**. The workflow for the expanded login suite then completed successfully in **GitHub Actions run #5**, using commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The test and report-upload steps both succeeded. All 22 logical cases now have a baseline implementation. The additional `error_user` execution is now implemented and reproduces BUG-SORT-001. No release recommendation has been made.
+The tester reported that all five login cases passed locally on **17 November 2026**. The workflow for the expanded login suite then completed successfully in **GitHub Actions run #5**, using commit [`16d512f`](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/commit/16d512f2b9bf5e2b8a547742181df6147eb72775/checks). The test and report-upload steps both succeeded. All 22 logical cases now have a baseline implementation. The additional `error_user` execution is now implemented and reproduces BUG-SORT-001. The current release recommendation is NO-GO; see [RELEASE_STATUS.md](RELEASE_STATUS.md).
 
-**Latest local verification — 17 November 2026:** a combined Maven run with `CI=true` executed 23 tests in headless Chrome: **22 passed and 1 failed**, with no errors or skipped tests:
+**Previous local verification — 17 November 2026:** a combined Maven run with `CI=true` executed 23 tests in headless Chrome: **22 passed and 1 failed**, with no errors or skipped tests:
 
 | Test class | Tests | Failures | Errors | Skipped |
 | --- | ---: | ---: | ---: | ---: |
@@ -70,9 +76,9 @@ On **17 November 2026**, [GitHub Actions run #32](https://github.com/CodecoolGlo
 
 ## Known failing test
 
-**Tracking:** [GitHub issue #8](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/8) (open); regression coverage is proposed in [PR #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/pull/9). The PR references the issue without closing it on merge.
+**Tracking:** [GitHub issue #8](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/8) (open); regression coverage was merged in [PR #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/pull/9). The PR references the issue without closing it on merge.
 
-The full `mvn test` run includes `ErrorUserSortingTest` and currently returns a nonzero exit code. The application displays a Backtrace alert, reverts the selected sorting option to A–Z, and leaves the prices unsorted for `error_user`. The test still requires correct sorting; accepting the alert only allows inspection of the resulting state. It is not skipped or inverted to make the suite green. See [BUG-SORT-001](BUG_REPORTS.md#bug-sort-001--price-low-to-high-sorting-fails-for-error_user) for reproduction steps and evidence.
+The full `mvn test` run includes `ErrorUserSortingTest` and currently returns a nonzero exit code. The application displays a Backtrace alert, reverts the selected sorting option to A–Z, and leaves the prices unsorted for `error_user`. The test still requires correct sorting; accepting the alert only allows inspection of the resulting state. It is not skipped or inverted to make the suite green. See [BUG-SORT-001](docs/bugs/BUG-SORT-001.md) for reproduction steps and evidence.
 
 The twenty-three-execution version has been verified locally and in GitHub Actions. The full workflow remains failing while this application defect persists. Earlier green CI results above belong to earlier suite versions.
 
@@ -186,6 +192,4 @@ Page objects contain browser interactions; tests contain JUnit assertions. Expli
 
 ## Next steps
 
-1. Review and merge [PR #9](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/pull/9) with its documented application failure, tracked in [GitHub issue #8](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/issues/8). The full workflow remains red while the defect persists.
-2. Document the other reproducible exploratory failures and create their issue reports.
-3. Execute the expanded suite and write the release status report.
+The selected automation, pipeline, confirmed defect tickets and release assessment are documented. Review the defect-report branch, then stage, commit and push the documentation for a pull request. The external application defects remain open; rerun their exact reproduction variants and the full CI suite after application fixes, then revise the release recommendation.

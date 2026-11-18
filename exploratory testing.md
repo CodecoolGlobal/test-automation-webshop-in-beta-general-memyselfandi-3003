@@ -2,7 +2,7 @@
 
 Test planning and quality assessment for [SauceDemo](https://www.saucedemo.com/), covering authentication, product browsing, shopping cart management, and checkout.
 
-**Current stage:** initial manual exploration completed; test design and automation are planned. This README records the tester's observations and provides a starting point for choosing automated tests. It does not describe an implemented automation framework or a completed CI pipeline.
+**Historical exploration notes:** this file preserves the original manual observations that informed the test plan. The automation and pipeline are now implemented. See [README.md](README.md), [TEST_CASES.md](TEST_CASES.md), the [confirmed defect register](BUG_REPORTS.md), and [RELEASE_STATUS.md](RELEASE_STATUS.md) for the current status. Targeted rechecks on 18 November 2026 refined product/account scope; broad original notes are not a claim that every behavior below was reproduced or automated.
 
 ## Project objectives
 
