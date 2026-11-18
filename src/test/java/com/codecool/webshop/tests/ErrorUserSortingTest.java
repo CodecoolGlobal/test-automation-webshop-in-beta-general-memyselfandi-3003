@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ErrorUserSortingTest extends BaseTest {
-    @Disabled
     @Test
     @DisplayName("TC-SORT-03 [error_user]: Sort prices from low to high without an error alert")
     public void sortErrorUserPricesAscending() {
