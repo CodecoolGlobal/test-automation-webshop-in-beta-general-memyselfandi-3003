@@ -31,6 +31,8 @@ The failing test is ErrorUserSortingTest.sortErrorUserPricesAscending, exposing 
 
 The same 23/1/0/0 result was previously verified in [GitHub Actions run #32 on 17 November](https://github.com/CodecoolGlobal/test-automation-webshop-in-beta-general-memyselfandi-3003/actions/runs/44163805385/job/134324359434). That is CI evidence from the earlier run; the 18 November execution above is local. Generated XML/text results are in target/surefire-reports; a portable [execution summary](docs/evidence/2026-11-18/junit-summary.txt) is retained with this report.
 
+The tester-provided GitHub Actions log from **18 November 2026** also reports **23 tests: 22 passed, 1 failed, 0 errors, 0 skipped**. Only ErrorUserSortingTest.sortErrorUserPricesAscending failed, with the same three assertions for BUG-SORT-001. Maven finished at **10:03:55 UTC**, took **51.964 seconds**, and returned exit code 1. This is CI evidence supplied as a job-log excerpt; its run URL and tested commit were not included. The CDP warning mentions browser protocol version 157, whereas the local run above used Chrome 158. No new failing test appears in this CI result.
+
 ## Coverage and exploratory findings
 
 The suite implements 22 logical cases across the six required stories, with 1–5 logical cases per story. TC-SORT-03 has two account executions, giving 23 in total. Eight cases are negative: four login, one post-logout access check, and three checkout required-field checks.
